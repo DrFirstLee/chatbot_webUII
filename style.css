@@ -1,0 +1,289 @@
+body {
+    background-color: #f0f0f0; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.chatbot-container {
+    width: 360px;
+    height: 640px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 넓은 배경 이미지 스타일 */
+.wide-banner {
+    width: 100%;
+    height: 60px; /* 적당한 높이 지정 */
+    overflow: hidden;
+}
+.wide-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 잘리지 않고 채워지도록 설정 */
+    display: block;
+}
+
+/* 헤더 스타일 */
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+}
+
+.back-arrow {
+    font-size: 24px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.service-name-text {
+    font-size: 16px; 
+    font-weight: bold;
+    color: #333;
+    flex-grow: 1; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.more-options {
+    font-size: 24px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* 채팅 본문 (스크롤 영역) */
+.chat-body {
+    padding: 10px 15px;
+    overflow-y: auto;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* 챗봇 로고 이미지 활용 */
+.bot-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+.bot-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 메시지 공통 */
+.message {
+    display: flex;
+    margin-bottom: 15px;
+    max-width: 85%;
+}
+
+.bot-message {
+    align-self: flex-start;
+}
+
+/* 초기 인사말 스타일 */
+.initial-greeting .message-content {
+    background: none;
+    padding: 0;
+    color: #333;
+}
+
+.initial-greeting .company-name {
+    font-size: 28px;
+    font-weight: 900;
+    color: #e50914; /* CES 컨셉 컬러 */
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.initial-greeting .inquiry-prompt {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.initial-greeting .time {
+    font-size: 12px;
+    color: #999;
+}
+
+/* 말풍선 스타일 */
+.text-bubble {
+    background-color: #f5f5f5; 
+    padding: 10px 14px;
+    border-radius: 18px;
+    border-top-left-radius: 4px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* 사용자 메시지 스타일 */
+.user-message {
+    align-self: flex-end;
+}
+.user-message .text-bubble {
+    background-color: #ffe400; /* 카카오톡 스타일 노란색 */
+    border-top-right-radius: 4px;
+    border-top-left-radius: 18px;
+}
+
+
+/* 연락처 정보 */
+.contact-info {
+    font-size: 13px;
+    color: #555;
+    margin: 10px 0 20px 38px; 
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.contact-info .icon {
+    margin-right: 5px;
+    color: #e50914; 
+}
+
+/* 옵션 버튼 그룹 */
+.main-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.option-button {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+
+.option-button:hover {
+    background-color: #f0f0f0;
+}
+
+.option-button .icon {
+    margin-right: 4px;
+}
+
+/* 주요 버튼 스타일 */
+.option-button.primary {
+    background-color: #e50914; 
+    color: white;
+    border-color: #e50914;
+}
+
+.option-button.primary:hover {
+    background-color: #c70712;
+    border-color: #c70712;
+}
+
+/* 응답 메시지 스타일 (CES 일정) */
+.response-bubble {
+    background-color: #f5f5f5;
+    padding: 10px 14px;
+    border-radius: 18px;
+    border-top-left-radius: 4px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+}
+
+.schedule-title {
+    background-color: #e50914; 
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.schedule-list {
+    margin-top: 5px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.schedule-list li {
+    margin-bottom: 4px;
+}
+
+/* 메시지 입력 창 스타일 */
+.chat-input-area {
+    display: flex;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    background-color: #ffffff;
+    align-items: center;
+    min-height: 50px;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-right: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#message-input:focus {
+    border-color: #e50914; 
+}
+
+#send-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background-color: #e50914; 
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+#send-button:hover {
+    background-color: #c70712;
+}
+
+.send-icon {
+    transform: rotate(-45deg); 
+    margin-top: -3px; 
+    margin-left: -1px;
+    font-weight: bold;
+}

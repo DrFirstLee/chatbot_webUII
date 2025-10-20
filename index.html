@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CES 2026 참관단 AI 챗봇 서비스</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chatbot-container">
+        <header class="chat-header">
+            <span class="back-arrow">&lt;</span>
+            <span class="service-name-text">CES 2026 참관단 AI 챗봇 서비스</span> 
+            <span class="more-options">...</span>
+        </header>
+
+        <div class="wide-banner">
+            <img src="wide_logo.jpg" alt="CES 2026 Wide Banner">
+        </div>
+
+        <div class="chat-body" id="chat-body">
+            <div class="message bot-message initial-greeting">
+                <img src="chatbot_logo.jpg" alt="CES AI Logo" class="bot-avatar ces-logo">
+                <div class="message-content">
+                    <p class="company-name ces-title">CES</p>
+                    <p class="inquiry-prompt">AI 챗봇 서비스에 문의하기</p>
+                    <p class="time">오전 9:58</p>
+                </div>
+            </div>
+
+            <div class="message bot-message">
+                <img src="chatbot_logo.jpg" alt="CES AI Logo" class="bot-avatar ces-logo">
+                <div class="message-content text-bubble">
+                    안녕하세요, **CES 2026 참관단 AI 챗봇**입니다.<br>
+                    궁금한 점을 메시지로 직접 입력하시거나, 아래 메뉴를 선택해주세요.
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <p>
+                    <span class="icon">📞</span> 실시간 챗봇 상담 **연중무휴 24시간**<br>
+                    <span class="icon">💻</span> 운영진 유선 문의 **평일 09:00-18:00**
+                </p>
+            </div>
+
+            <div class="main-options" id="main-options">
+                <button class="option-button primary" data-action="ces-schedule">
+                    <span class="icon">💻</span> CES 2026 일정
+                </button>
+                <button class="option-button secondary" data-action="venue-info">
+                    <span class="icon">📌</span> 전시장 안내
+                </button>
+                <button class="option-button secondary" data-action="tour-recommend">
+                    <span class="icon">🚶</span> 관람동선 추천
+                </button>
+                <button class="option-button secondary" data-action="keynote-info">
+                    <span class="icon">📝</span> 기조연설 정보
+                </button>
+                <button class="option-button secondary" data-action="lvcc-loop">
+                    <span class="icon">🚌</span> LVCC loop 탑승 위치
+                </button>
+            </div>
+            
+            <div id="response-container"></div>
+
+        </div>
+        
+        <div class="chat-input-area">
+            <input type="text" id="message-input" placeholder="메시지 또는 키워드를 입력하세요..." />
+            <button id="send-button">
+                <span class="send-icon">▲</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
