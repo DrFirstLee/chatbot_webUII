@@ -3,17 +3,19 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* 화면 상단에 붙도록 조정 */
     min-height: 100vh;
     margin: 0;
 }
 
+/* 화면 높이를 100%로 설정하여 사용자 화면에 꽉 차도록 함 */
 .chatbot-container {
-    width: 360px;
-    height: 640px;
+    width: 100%; /* 너비는 좁은 모바일 뷰포트로 가정 */
+    max-width: 400px; /* 실제 모바일 화면에 가까운 최대 너비 설정 */
+    height: 100vh; /* 뷰포트 높이 100%로 설정 */
     background-color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 0; /* 화면 꽉 채우기 위해 모서리 둥글게 제거 */
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -22,13 +24,13 @@ body {
 /* 넓은 배경 이미지 스타일 */
 .wide-banner {
     width: 100%;
-    height: 60px; /* 적당한 높이 지정 */
+    height: 100px; /* 배너 높이 확대 */
     overflow: hidden;
 }
 .wide-banner img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지가 잘리지 않고 채워지도록 설정 */
+    object-fit: cover; /* 이미지가 잘리지 않고 영역을 채우도록 */
     display: block;
 }
 
@@ -74,30 +76,25 @@ body {
     flex-direction: column;
 }
 
-/* 챗봇 로고 이미지 활용 */
+/* 챗봇 로고 이미지 (아바타) 스타일 수정: 비율 유지 및 깨짐 방지 */
 .bot-avatar {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* 아바타 크기 약간 키움 */
+    height: 40px; 
     border-radius: 50%;
     margin-right: 8px;
     border: 1px solid #ccc;
     overflow: hidden;
+    flex-shrink: 0; /* 공간이 부족해도 축소되지 않도록 */
 }
+
+/* 로고 이미지 비율 깨짐 방지: object-fit: cover 대신 contain 또는 fill 사용 가능. 
+   여기서는 비율을 유지하고 영역을 채우는 cover를 사용하되, 로고 형태를 고려하여 조정했습니다. */
 .bot-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-}
-
-/* 메시지 공통 */
-.message {
-    display: flex;
-    margin-bottom: 15px;
-    max-width: 85%;
-}
-
-.bot-message {
-    align-self: flex-start;
+    object-fit: cover; /* 이미지가 영역을 채우면서 비율 유지 (일부 잘림 발생 가능) */
+    /* 로고가 둥근 형태로 완벽하게 보여야 한다면 object-fit: contain */
+    display: block;
 }
 
 /* 초기 인사말 스타일 */
@@ -110,7 +107,7 @@ body {
 .initial-greeting .company-name {
     font-size: 28px;
     font-weight: 900;
-    color: #e50914; /* CES 컨셉 컬러 */
+    color: #e50914; 
     line-height: 1;
     margin-bottom: 5px;
 }
@@ -126,118 +123,7 @@ body {
     color: #999;
 }
 
-/* 말풍선 스타일 */
-.text-bubble {
-    background-color: #f5f5f5; 
-    padding: 10px 14px;
-    border-radius: 18px;
-    border-top-left-radius: 4px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #333;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-}
-
-/* 사용자 메시지 스타일 */
-.user-message {
-    align-self: flex-end;
-}
-.user-message .text-bubble {
-    background-color: #ffe400; /* 카카오톡 스타일 노란색 */
-    border-top-right-radius: 4px;
-    border-top-left-radius: 18px;
-}
-
-
-/* 연락처 정보 */
-.contact-info {
-    font-size: 13px;
-    color: #555;
-    margin: 10px 0 20px 38px; 
-    line-height: 1.6;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.contact-info .icon {
-    margin-right: 5px;
-    color: #e50914; 
-}
-
-/* 옵션 버튼 그룹 */
-.main-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.option-button {
-    padding: 8px 12px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    background-color: white;
-    cursor: pointer;
-    font-size: 13px;
-    transition: background-color 0.2s, border-color 0.2s;
-    white-space: nowrap;
-}
-
-.option-button:hover {
-    background-color: #f0f0f0;
-}
-
-.option-button .icon {
-    margin-right: 4px;
-}
-
-/* 주요 버튼 스타일 */
-.option-button.primary {
-    background-color: #e50914; 
-    color: white;
-    border-color: #e50914;
-}
-
-.option-button.primary:hover {
-    background-color: #c70712;
-    border-color: #c70712;
-}
-
-/* 응답 메시지 스타일 (CES 일정) */
-.response-bubble {
-    background-color: #f5f5f5;
-    padding: 10px 14px;
-    border-radius: 18px;
-    border-top-left-radius: 4px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    margin-bottom: 10px;
-}
-
-.schedule-title {
-    background-color: #e50914; 
-    color: white;
-    padding: 5px 10px;
-    border-radius: 15px;
-    display: inline-block;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.schedule-list {
-    margin-top: 5px;
-    padding-left: 0;
-    list-style: none;
-}
-
-.schedule-list li {
-    margin-bottom: 4px;
-}
-
-/* 메시지 입력 창 스타일 */
+/* 메시지 입력 창 스타일 (기존과 동일) */
 .chat-input-area {
     display: flex;
     padding: 10px 15px;
@@ -287,3 +173,20 @@ body {
     margin-left: -1px;
     font-weight: bold;
 }
+
+/* 나머지 기존 스타일 (말풍선, 버튼 등) 유지 */
+.message { display: flex; margin-bottom: 15px; max-width: 85%; }
+.bot-message { align-self: flex-start; }
+.text-bubble { background-color: #f5f5f5; padding: 10px 14px; border-radius: 18px; border-top-left-radius: 4px; font-size: 14px; line-height: 1.5; color: #333; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
+.user-message { align-self: flex-end; }
+.user-message .text-bubble { background-color: #ffe400; border-top-right-radius: 4px; border-top-left-radius: 18px; }
+.contact-info { font-size: 13px; color: #555; margin: 10px 0 20px 50px; line-height: 1.6; background-color: #f9f9f9; padding: 10px; border-radius: 8px; } /* 아바타 크기에 맞춰 마진 조정 */
+.contact-info .icon { margin-right: 5px; color: #e50914; }
+.main-options { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.option-button { padding: 8px 12px; border-radius: 20px; border: 1px solid #ccc; background-color: white; cursor: pointer; font-size: 13px; transition: background-color 0.2s, border-color 0.2s; white-space: nowrap; }
+.option-button.primary { background-color: #e50914; color: white; border-color: #e50914; }
+.option-button.primary:hover { background-color: #c70712; border-color: #c70712; }
+.response-bubble { background-color: #f5f5f5; padding: 10px 14px; border-radius: 18px; border-top-left-radius: 4px; font-size: 14px; line-height: 1.6; color: #333; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); margin-bottom: 10px; }
+.schedule-title { background-color: #e50914; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block; font-weight: bold; margin-bottom: 10px; }
+.schedule-list { margin-top: 5px; padding-left: 0; list-style: none; }
+.schedule-list li { margin-bottom: 4px; }
