@@ -65,14 +65,19 @@ body {
 }
 
 /* 넓은 배경 이미지 스타일 (채팅 영역 꽉 채우기) */
+/* ----------------------------------- */
+/* 넓은 배경 이미지 스타일 (채팅 영역 꽉 채우기) */
+/* ----------------------------------- */
 .message.wide-banner-message {
-    width: 100%; /* 부모(chat-body) 콘텐츠 영역의 100% */
+    /* 1. chat-body의 콘텐츠 너비(100%)에 좌우 패딩(15px+15px=30px)을 더한 너비를 설정 */
+    width: calc(100% + 30px); 
     height: 100px; 
     
-    /* chat-body의 좌우 패딩(15px)을 상쇄시켜 컨테이너 꽉 채우기 */
+    /* 2. chat-body의 좌우 패딩(15px)을 상쇄시켜 컨테이너 양 끝에 붙도록 마진 설정 */
     margin-left: -15px;
     margin-right: -15px;
-    /* chat-body의 상단 패딩(10px)을 상쇄시키기 위해 */
+    
+    /* 3. chat-body의 상단 패딩(10px)을 상쇄시켜 헤더 바로 아래에 붙도록 마진 설정 */
     margin-top: -10px; 
 
     overflow: hidden;
@@ -80,12 +85,11 @@ body {
 }
 
 .wide-banner-image {
-    width: 100%;
+    width: 100%; /* 부모 요소인 .message.wide-banner-message를 꽉 채우도록 설정 */
     height: 100%;
-    object-fit: cover; /* 이미지가 영역을 채우면서 비율 유지 */
+    object-fit: cover; 
     display: block;
 }
-
 /* 챗봇 로고 이미지 (아바타) 스타일 */
 .bot-avatar {
     width: 40px; 
