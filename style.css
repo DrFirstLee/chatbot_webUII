@@ -311,3 +311,128 @@ body {
     margin-left: -1px;
     font-weight: bold;
 }
+
+
+/* ----------------------------------- */
+/* 모달 팝업 스타일 추가 */
+/* ----------------------------------- */
+
+.modal-overlay {
+    /* 초기 상태: 숨김 */
+    display: none; 
+    
+    /* 화면 전체를 덮도록 설정 */
+    position: fixed;
+    z-index: 1000; /* 챗봇 UI보다 위에 위치 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* 배경을 어둡게 처리 */
+    background-color: rgba(0, 0, 0, 0.7);
+    
+    /* 콘텐츠를 중앙에 배치 */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 상단 여백 조정 */
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 350px;
+    animation: fadeIn 0.3s ease-out; /* 애니메이션 추가 */
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.close-button {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 15px;
+}
+
+.modal-body p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* 폼 요소 스타일 */
+#contactForm label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+#contactForm input[type="email"],
+#contactForm textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: content-box;
+}
+
+#contactForm textarea {
+    resize: vertical;
+}
+
+#sendInquiryButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #e50914; /* CES 컬러 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+#sendInquiryButton:hover {
+    background-color: #c70712;
+}
+
+/* 모달 애니메이션 */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+}

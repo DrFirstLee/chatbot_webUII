@@ -9,7 +9,7 @@
 <body>
     <div class="chatbot-container">
         <header class="chat-header">
-            <span class="back-arrow">&lt;</span>
+            <!-- <span class="back-arrow">&lt;</span> -->
             <span class="service-name-text">CES 2026 참관단 AI 챗봇 서비스</span> 
             <span class="more-options">...</span>
         </header>
@@ -71,7 +71,26 @@
             </button>
         </div>
     </div>
-
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>챗봇 담당자에게 문의하기</h3>
+                <span class="close-button">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>챗봇 운영팀에 직접 문의하실 내용을 남겨주세요.</p>
+                <form id="contactForm">
+                    <label for="contactEmail">이메일 주소</label>
+                    <input type="email" id="contactEmail" placeholder="답변을 받을 이메일을 입력하세요" required>
+                    
+                    <label for="contactMessage">문의 내용</label>
+                    <textarea id="contactMessage" rows="5" placeholder="궁금한 내용을 구체적으로 작성해주세요." required></textarea>
+                    
+                    <button type="submit" id="sendInquiryButton">문의 전송</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,52 @@
+
+// script.js 파일 상단에 모달 관련 변수와 함수를 추가합니다.
+
+// 모달 요소 변수
+const modal = document.getElementById('contactModal');
+const moreOptionsButton = document.querySelector('.more-options');
+const closeButton = document.querySelector('.close-button');
+const sendInquiryButton = document.getElementById('sendInquiryButton');
+const contactForm = document.getElementById('contactForm');
+
+
+// 1. '...' 버튼 클릭 시 모달 열기
+moreOptionsButton.addEventListener('click', () => {
+    modal.style.display = 'flex'; // CSS에서 display: none; -> flex;로 변경하여 표시
+});
+
+// 2. 'X' 버튼 클릭 시 모달 닫기
+closeButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// 3. 모달 외부 클릭 시 모달 닫기
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+
+// 4. 문의 전송 폼 제출 이벤트 처리
+contactForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // 기본 폼 제출 방지 (페이지 새로고침 방지)
+    
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    
+    // TODO: 이메일과 메시지를 Flask 서버의 다른 엔드포인트(예: /submit_contact)로 POST 요청 보내는 로직 구현
+    
+    // 현재는 임시 알림으로 대체
+    alert(`[문의 전송 완료]\n이메일: ${email}\n내용: ${message}\n\n서버로 전송하는 내용은 협의 후 추가 예정입니다.`);
+    
+    // 전송 후 모달 닫기 및 폼 초기화
+    modal.style.display = 'none';
+    contactForm.reset();
+});
+
+// (기존의 모든 챗봇 로직은 이 아래에 유지됩니다.)
+// ...
+
 document.addEventListener('DOMContentLoaded', () => {
     const mainOptions = document.getElementById('main-options');
     const responseContainer = document.getElementById('response-container');
