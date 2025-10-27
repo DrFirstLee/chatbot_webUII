@@ -112,13 +112,14 @@ body {
 .message { 
     display: flex; 
     margin-bottom: 15px; 
-    max-width: 85%; 
+    max-width: 100%; 
 }
 
+/* 챗봇 메시지 스타일 (왼쪽 정렬) */
 .bot-message { 
-    align-self: flex-start; 
+    align-self: flex-start; /* chat-body 내에서 왼쪽 정렬 */
+    max-width: 85%; /* 챗봇 메시지는 너비 제한 */
 }
-
 /* 초기 인사말 스타일 */
 .initial-greeting .message-content {
     background: none;
@@ -145,26 +146,47 @@ body {
     color: #999;
 }
 
-/* 말풍선 스타일 */
+/* ----------------------------------- */
+/* 말풍선 및 내용 스타일 */
+/* ----------------------------------- */
 .text-bubble { 
     background-color: #f5f5f5; 
     padding: 10px 14px; 
     border-radius: 18px; 
-    border-top-left-radius: 4px; 
     font-size: 14px; 
     line-height: 1.5; 
     color: #333; 
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); 
 }
-
-/* 사용자 메시지 스타일 */
-.user-message { 
-    align-self: flex-end; 
+/* 봇 말풍선 (왼쪽 위 모서리 둥글기 제거) */
+.bot-message .text-bubble {
+    border-top-left-radius: 4px; 
 }
+/* 사용자 메시지 스타일 */
+/* 사용자 메시지 스타일 (오른쪽 정렬) */
+.user-message { 
+    align-self: flex-end !important; /* chat-body 내에서 오른쪽 정렬 강제 */
+    
+    /* 사용자 메시지 내부를 flex로 설정하여 말풍선을 오른쪽으로 밀기 */
+    display: flex; 
+    justify-content: flex-end; 
+    
+    /* 사용자 메시지도 max-width를 봇 메시지와 동일하게 적용 */
+    max-width: 85%; 
+}
+
+.user-message .message-content {
+    /* flex-grow 해제는 좋지만, display: block/flex 설정에 따라 조정 필요 */
+    flex-grow: 0; 
+}
+
+/* 사용자 말풍선 (오른쪽 위 모서리 둥글기 제거 및 색상 변경) */
 .user-message .text-bubble { 
     background-color: #ffe400; 
     border-top-right-radius: 4px; 
     border-top-left-radius: 18px; 
+    /* 굵은 글씨가 아닌 일반 텍스트가 오른쪽 정렬을 방해하지 않도록 */
+    text-align: left; 
 }
 
 /* 연락처 정보 */
