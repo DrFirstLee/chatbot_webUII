@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBody = document.getElementById('chat-body');
     const sendButton = document.getElementById('send-button');
     const messageInput = document.getElementById('message-input');
-
-    const API_ENDPOINT = 'http://49.166.98.88:8801/chatbot_webUI';
+    const API_ENDPOINT = '/api/chatbot_webUI';
+    // const API_ENDPOINT = 'http://49.166.98.88:8801/chatbot_webUI';
     // **새로운 함수: 마크다운 텍스트를 HTML로 변환 (굵은 글씨)**
     const formatTextForDisplay = (text) => {
         if (!text) return '';
