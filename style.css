@@ -201,6 +201,7 @@ body {
     /* 둥글게 */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     /* 살짝 그림자 */
+    border-top-left-radius: 4px;
 
     text-align: left;
     word-break: keep-all;
