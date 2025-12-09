@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.querySelector('.close-button');
 
     // API 엔드포인트
-    const API_ENDPOINT = '/api/chatbot_webUI';
+    // const API_ENDPOINT = '/api/chatbot_webUI';
+    const API_ENDPOINT = 'https://abcd-1234.ngrok-free.app/chatbot_webUI';
 
     // ----------------------------------------------------------------
     // 2. 화면 전환 및 스크롤 함수
