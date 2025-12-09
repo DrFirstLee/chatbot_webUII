@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBody = document.getElementById('chat-body');
     const landingView = document.getElementById('landing-view');
     const responseContainer = document.getElementById('response-container');
-    
+
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
-    const pillButtons = document.querySelectorAll('.pill-btn');
+    const pillButtons = document.querySelectorAll('.pill-button');
 
     // 모달 관련 요소
     const moreOptionsBtn = document.querySelector('.more-options');
@@ -22,37 +22,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 스크롤을 맨 아래로 이동
     function scrollToBottom() {
-        // 부드럽게 스크롤
         chatBody.scrollTo({
             top: chatBody.scrollHeight,
             behavior: 'smooth'
         });
     }
 
-    // ★ 핵심 변경 사항: 랜딩 페이지를 숨기지 않음
+    // 랜딩 페이지 숨기지 않고 대화창 활성화
     function activateChatContainer() {
-        // responseContainer가 숨겨져 있다면 보이게 설정
         if (responseContainer.style.display === 'none' || responseContainer.style.display === '') {
             responseContainer.style.display = 'flex';
             responseContainer.style.flexDirection = 'column';
         }
-        
-        // landingView.style.display = 'none';  <-- 이 줄을 삭제하여 랜딩 페이지가 유지되게 함
     }
 
-    // 텍스트 포맷팅 (**굵게** -> <b>굵게</b>)
+    // 텍스트 포맷팅
+    // script.js
+
+    // 텍스트 포맷팅 (수정됨)
     function formatText(text) {
         if (!text) return "";
-        return text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
-    }
 
+        // 1. **굵게** 처리
+        let formatted = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+
+        // 2. 줄바꿈 처리: \n을 <br>로 바꾸되, 연속된 줄바꿈은 하나로 처리하거나 적절히 조절
+        formatted = formatted.replace(/\n/g, '<br>');
+
+        return formatted;
+    }
     // ----------------------------------------------------------------
     // 3. 메시지 추가 함수
     // ----------------------------------------------------------------
 
     // 사용자 메시지 추가
     function addUserMessage(text) {
-        activateChatContainer(); // 대화 컨테이너 활성화
+        activateChatContainer();
 
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', 'user-message');
@@ -62,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         responseContainer.appendChild(messageDiv);
-        scrollToBottom(); // 메시지 추가 후 스크롤 내리기
+        scrollToBottom();
     }
 
     // 봇 메시지 추가
     function addBotMessage(text) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', 'bot-message');
-        
+
         messageDiv.innerHTML = `
             <div class="bot-avatar">
                 <img src="chatbot_logo.jpg" alt="AI">
@@ -79,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         responseContainer.appendChild(messageDiv);
-        scrollToBottom(); // 메시지 추가 후 스크롤 내리기
+        scrollToBottom();
     }
 
     // ----------------------------------------------------------------
@@ -117,204 +122,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------
-    // 5. 이벤트 리스너
+    // 5. 이벤트 리스너 (업데이트됨)
+    // ----------------------------------------------------------------
+    // ----------------------------------------------------------------
+    // 5. 이벤트 리스너 (줄바꿈 중복 문제 해결됨)
     // ----------------------------------------------------------------
 
-    // 질문 버튼(pill-btn) 클릭 시
     pillButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const action = button.dataset.action; // data-action 속성 가져오기
-            const text = button.innerText.trim(); // 버튼 텍스트 가져오기
-            
-            // 1. 사용자 말풍선 추가
-            addUserMessage(text);
-            
-            // 2. 버튼 종류에 따른 분기 처리
-            if (action === 'ces-basic') {
-                // 'ces-basic' 버튼일 경우 API 호출 대신 준비된 답변을 즉시 출력
+            const action = button.dataset.action;
+            const text = button.innerText.trim();
+
+            addUserMessage(text); // 사용자 메시지 추가
+
+            // 🌟 버튼별 하드코딩 답변 처리 
+            // (<br> 태그를 줄이고 엔터로 줄바꿈을 처리하여 간격을 좁혔습니다)
+            if (action === 'ces-schedule') {
                 setTimeout(() => {
-                    addBotMessage(`일정
-- 기간: 2026년 1월 6일(화) ~ 1월 9일(금) 📅
-- 주요 개최지: 라스베이거스 컨벤션센터(LVCC), Venetian Expo, ARIA 등 (부대 프로그램과 일부 전시·세션은 호텔·외부 베뉴에서 진행) 📍
+                    addBotMessage(`<b>📅 CES 2026 운영 시간</b>
 
-4대 핵심 테마
-1. AI (인공지능) 🤖
-- 생성형 AI를 넘어서 에이전트형·온디바이스 AI, 멀티모달·피지컬 AI 등 실제 산업·기기 적용 중심의 발전이 핵심.
+- <b>1월 6일(화):</b> 10 AM - 6 PM
+- <b>1월 7일(수):</b> 9 AM - 6 PM
+- <b>1월 8일(목):</b> 9 AM - 6 PM
+- <b>1월 9일(금):</b> 9 AM - 4 PM
 
-2. 로보틱스 (Robotics) 🤝🤖
-- 휴머노이드·산업용 협동로봇·자율이동로봇(AMR) 등 AI 결합 로봇의 실환경 적용 데모와 ‘피지컬 AI’가 주요 화두.
+<span style="font-size: 13px; color: #666;">※ 현지 시간 기준이며, 상황에 따라 변동될 수 있습니다.</span>`);
+                }, 600);
 
-3. 디지털 헬스 (Digital Health) 🩺
-- 원격의료·웨어러블·AI 기반 진단·처방형 디지털 치료제(PDT) 등 진단을 넘어 치료·생활관리 중심의 솔루션 부각.
+            } else if (action === 'venue-info') {
+                setTimeout(() => {
+                    addBotMessage(`<b>📍 주요 전시장 안내</b>
 
-4. 모빌리티 (Vehicle Tech & Advanced Mobility) 🚗⚡
-- SDV(소프트웨어 정의 차량), 자율주행, 전기차·배터리·차량 내 인포테인먼트 등 모빌리티의 상용화·소프트웨어화 추진.
+<b>1. LVCC (라스베이거스 컨벤션 센터)</b>
+- 메인 전시, 모빌리티(West), 로보틱스(North), 가전(Central)
 
-추가 참고
-- 새 프로그램 ‘CES Foundry’(AI·블록체인·양자기술) 등 신설 섹션이 있어 관련 세션은 별도 일자·장소(예: Foundry는 1/7–1/8 예정)에서 열립니다. 🔍
+<b>2. Venetian Expo (베네시안 엑스포)</b>
+- 유레카 파크(스타트업), 글로벌 파빌리온, 라이프스타일
 
-원하시면 각 테마별 주요 발표자·주요 참가기업 또는 꼭 볼 전시(한국 기업 포함)도 정리해 드릴게요. 😊
-`);
-                }, 600); // 0.6초 뒤에 자연스럽게 답변 출력
+<b>3. ARIA / C Space</b>
+- 미디어, 광고, 엔터테인먼트 기술
+
+<b>4. Wynn / Encore</b>
+- 삼성전자 단독 전시관 및 비공개 미팅룸`);
+                }, 600);
+
             } else if (action === 'keynote-info') {
-                // ★ [새로 추가된 부분] 기조연설자 정보 답변
                 setTimeout(() => {
-                    addBotMessage(`🔔기조연설자(확정·발표된 주요자)와 핵심 발표 내용을 간단히 정리해 드릴게요. 😊
+                    addBotMessage(`<b>🎤 주요 기조연설 (Keynote)</b>
 
-- 🎤 리사 수(Lisa Su, AMD)
-- 언제/어디: 2026년 1월 5일, 베네시안 팔라초 볼룸(발표 일정 확정)
-- 주요 내용: AMD의 미래 AI 컴퓨팅 전략(엔비디아에 도전하는 고성능 AI 플랫폼·엣지·클라우드 통합 비전) 발표 예정. 🧠⚡
+<b>1. 리사 수 (AMD CEO)</b>
+- 1/5, Venetian Palazzo Ballroom
+- 고성능 AI 컴퓨팅 및 미래 전략 발표
 
-- 🎤 양위안칭(Yuanqing Yang, 레노버)
-- 어디: 라스베이거스의 대형 공연장 Sphere에서 기조연설 예정(정확한 시간/일정은 추후 공지)
-- 주요 내용: “Smarter AI for All”(모두를 위한 더 스마트한 AI) 주제 — 온디바이스 AI PC, 하이브리드 AI 전략, 디바이스·인프라·서비스 통합 비전 제시 예정. 💻🤝
+<b>2. 양위안칭 (Lenovo CEO)</b>
+- Sphere(스피어) 무대
+- "Smarter AI for All" (하이브리드 AI 비전)
 
-- 🔬 CES Foundry(새 플랫폼, 1/7–8 폰테인블루) 관련 발표·세션
-- 내용: AI·블록체인·양자기술 중심 심층 컨퍼런스·데모·네트워킹. OpenAI·구글·앤트로픽 등 대형 AI업체 참가 가능성(확정 명단은 추후 공개). 🔗🔮
-
-- 🤖 기타 포인트(기대·예상)
-- 피지컬 AI·로보틱스(휴머노이드, 산업용·서비스 로봇) 관련 주요 기업 발표 및 데모 다수.
-- 모빌리티·디지털 헬스·지속가능성 등 핵심 테마 연사·패널 다수 예정.`);
+<b>3. 게리 샤피로 (CTA 회장)</b>
+- CES 파운드리(AI·블록체인·양자) 신설 소개`);
                 }, 600);
-            
-            } else if (action === 'keynote-info') {
-                // ★ [새로 추가된 부분] 기조연설자 정보 답변
+
+            } else if (action === 'floor-map') {
                 setTimeout(() => {
-                    addBotMessage(`🔔기조연설자(확정·발표된 주요자)와 핵심 발표 내용을 간단히 정리해 드릴게요. 😊
+                    addBotMessage(`<b>🔗 CES 2026 플로어맵</b>
 
-- 🎤 리사 수(Lisa Su, AMD)
-- 언제/어디: 2026년 1월 5일, 베네시안 팔라초 볼룸(발표 일정 확정)
-- 주요 내용: AMD의 미래 AI 컴퓨팅 전략(엔비디아에 도전하는 고성능 AI 플랫폼·엣지·클라우드 통합 비전) 발표 예정. 🧠⚡
-
-- 🎤 양위안칭(Yuanqing Yang, 레노버)
-- 어디: 라스베이거스의 대형 공연장 Sphere에서 기조연설 예정(정확한 시간/일정은 추후 공지)
-- 주요 내용: “Smarter AI for All”(모두를 위한 더 스마트한 AI) 주제 — 온디바이스 AI PC, 하이브리드 AI 전략, 디바이스·인프라·서비스 통합 비전 제시 예정. 💻🤝
-
-- 🔬 CES Foundry(새 플랫폼, 1/7–8 폰테인블루) 관련 발표·세션
-- 내용: AI·블록체인·양자기술 중심 심층 컨퍼런스·데모·네트워킹. OpenAI·구글·앤트로픽 등 대형 AI업체 참가 가능성(확정 명단은 추후 공개). 🔗🔮
-
-- 🤖 기타 포인트(기대·예상)
-- 피지컬 AI·로보틱스(휴머노이드, 산업용·서비스 로봇) 관련 주요 기업 발표 및 데모 다수.
-- 모빌리티·디지털 헬스·지속가능성 등 핵심 테마 연사·패널 다수 예정.`);
+공식 웹사이트 또는 모바일 앱에서 실시간 지도를 확인하실 수 있습니다.
+원하시는 전시관(예: 삼성, LVCC West)을 말씀해주시면 위치를 안내해 드릴게요! 😉`);
                 }, 600);
-            
-            }   else if (action === 'tech-trend') {
-                // ★ [새로 추가된 부분] 기조연설자 정보 답변
+
+            } else if (action === 'innovation-award') {
                 setTimeout(() => {
-                    addBotMessage(`핵심만 빠르게 정리해 드릴게요. 🚀
+                    addBotMessage(`<b>🏆 CES 2026 최고혁신상 하이라이트</b>
 
-1) 피지컬 AI(Physical AI)란?
-- AI가 ‘뇌(Brain)’만 하는 게 아니라 센서·구동장치가 있는 기계(로봇·드론 등)와 결합해 실제 물리 세계에서 자율적으로 행동·작업하는 기술을 말합니다.
-- 소프트웨어(생성형 AI → 에이전트) + 하드웨어(로봇·센서·모터)가 융합된 형태 = ‘임보디드 AI’ 또는 ‘피지컬 AI’.
+올해 최고혁신상 30개 중 <b>절반(15개)</b>을 한국 기업이 수상했습니다! 🎉
 
-2) 핵심 기술 요소 🔧
-- 멀티모달 인식: 카메라·음성·제스처·라이다·4D 레이더 등 여러 센서 융합으로 주변 파악.
-- VLA(Visual-Language-Action) 모델: 시각 인식 + 자연어 이해 → 상황에 맞는 행동 결정.
-- 온디바이스·엣지 AI: 지연·프라이버시·비용 절감 위해 현장(로컬)에서 실시간 추론.
-- 고성능 제어·동역학, 강화학습·시뮬레이션 기반 학습, 안전·충돌회피 알고리즘.
-
-3) 휴머노이드 트렌드 (무대 전환) 🤖
-- 가정용 서비스보조 → 산업·물류·건설 등 실전 적용 우선: 안정성·정밀작업 가능한 휴머노이드가 먼저 산업 현장에 투입되는 흐름.
-- ‘집사형’에서 ‘업무형(산업용/협동)’으로 전략 이동 (삼성·LG·현대 등).
-- 보스턴다이내믹스 아틀라스, 레인보우로보틱스(삼성 계열) 등 대형 데모·협업 가시화.
-
-4) 비즈니스·시장 변화 💼
-- CES 등 전시도 B2B(기업·산업용) 중심으로 무게 이동.
-- RaaS(Robotics-as-a-Service) 확산 — 초기 투자 부담 낮춰 중소기업·현장 도입 촉진.
-- 물류·검사·건설·의료 보조·돌봄·모빌리티(로보택시·차량 통합) 등 상용 시장 빠르게 성장.
-
-5) 실제 사례(주목 포인트) ⭐
-- 두산로보틱스 ‘Scan&Go’(로봇팔+AMR·3D 비전) — 검사·샌딩 등 산업 적용 사례.
-- 딥퓨전에이아이 RAPA(4D 레이더 기반 인지) — 레이더만으로 정밀 인식 시연.
-- 현대·LG·삼성 등: 휴머노이드·로봇 전략 발표 및 대형 데모 예고.
-
-6) 사회적·규제 이슈 ⚖️
-- 안전·윤리·프라이버시·사이버보안 검증 필요.
-- 노동시장 영향(일자리 재편) → 재교육·인력전환 정책 중요.
-
-7) CES2026에서 주의해볼 것들 (짧게) 🎯
-- K-휴머노이드 얼라이언스(노스홀) 전용 파빌리온, CES Foundry(피지컬 AI·양자·블록체인) 세션, 주요 기업(현대·삼성·LG) 데모와 혁신상 수상작(두산·딥퓨전 등).
-- 현장 데모는 직접 보고 안전·반응·인터페이스를 체크하세요.
-
-더 알고 싶은 것(예: 특정 기업 기술 비교, VLA 기술 원리, 산업별 상용화 시나리오 등) 있으면 바로 알려 주세요. 😊`);
+<b>✨ 주요 수상작:</b>
+- <b>두산로보틱스:</b> AI 자율 로봇 '스캔앤고'
+- <b>딥퓨전에이아이:</b> 4D 레이더 'RAPA'
+- <b>삼성전자:</b> 양자내성암호 기술
+- <b>LG전자, 네이션에이, 둠둠 등</b> 다수 수상`);
                 }, 600);
-            
-            }
-            else if (action === 'ces-foundry') {
-                // ★ [새로 추가된 부분] 기조연설자 정보 답변
-                setTimeout(() => {
-                    addBotMessage(`1) CES 파운드리(CES Foundry)란?
-- CES 2026에서 새로 신설된 전문 플랫폼으로, AI·블록체인·양자기술 커뮤니티를 연결하는 행사 공간입니다.
-- 일정/장소: 1월 7~8일, 라스베이거스 폰테인블루(폰테인블루) 호텔.
-- 내용: 컨퍼런스(패널·키노트), 제품 데모, 프라이빗 미팅, 네트워킹(셀러브레이션 믹서) 등을 통해 기술 융합과 비즈니스 기회를 촉진합니다.
-- 특징: 대기업·스타트업·연구기관이 모여 AI·블록체인·양자기술의 실제 적용 사례와 협업 방안을 공개·논의합니다. 🚀
 
-2) CES가 꼽은 5대 핵심 산업 분야
-- 1) AI 🤖
-- 에이전트·온디바이스·멀티모달·피지컬 AI 등, 지능화된 서비스와 하드웨어 결합이 핵심입니다.
-
-- 2) 디지털 헬스 🏥
-- 진단에서 치료·일상관리로 확장되는 AI 기반 정밀의료·원격진료·처방형 디지털 치료제(PDT) 등.
-
-- 3) 차량 기술·첨단 모빌리티 🚗
-- SDV(소프트웨어 정의 차량), 자율주행, 전기차·배터리·인포테인먼트 등 모빌리티 혁신.
-
-- 4) 로보틱스 🤝
-- 피지컬 AI(임베디드 AI) 기반 휴머노이드·협동로봇·AMR·RaaS 등 산업·서비스 전 영역으로 확장.
-
-- 5) 지속가능성·인간 안보 ♻️
-- 에너지 전환(ESS, SMR, 수소), 탄소저감, 재난·안전·보안 기술 등 사회적·환경적 문제 해결 중심.
-
-더 궁금한 점 있으면 바로 알려주세요 — 필요한 세션이나 기업·부스 정보도 찾아드릴게요! ✨`);
-                }, 600);
-            
-            }
-            else if (action === 'k-company') {
-                // ★ [새로 추가된 부분] 기조연설자 정보 답변
-                setTimeout(() => {
-                    addBotMessage(`아래는 CES2026에 참가하는 주요 한국 기업들의 전시 계획 요약입니다. 빠르게 확인하세요! ✨
-
-삼성전자 📍
-- 별도 대형 전시관: 윈(Wynn) 호텔에 단독 전시장 운영(약 4,628 m² / ~1400평).
-- LVCC 메인홀이 아닌 별도 공간에서 대규모 전시 및 공식 세션 진행.
-- LVCC와는 약 1km 거리(도보 약 15분 / 차량 3–5분). ⚠️ 세부 프로그램은 추후 공개.
-
-LG전자 📍
-- LVCC 메인 홀에 참여(부스 번호: 15004).
-- 추가 미팅룸: 센트럴 홀 미팅룸 C201에서 전시·미팅 예정.
-- 가전·로봇·AI 기반 솔루션 중심 전시 예상.
-
-현대자동차 그룹 🤖🚗
-- ‘로보틱스’ 콘셉트 전면 배치.
-- 현대차·현대모비스·현대위아 등 참가.
-- 보스턴다이내믹스의 휴머노이드 ‘아틀라스’ 공개 가능성 등 로보틱스·모빌리티 통합 비전 전시 예정.
-
-기타(한국 관련) 🇰🇷
-- SK그룹은 그룹 차원 불참, 다만 SK하이닉스는 단독 참가 예정.
-- K-휴머노이드 얼라이언스: 노스홀에 한국형 로봇 파빌리온(한국 대학·기업 40여 곳 참여) 설치.`);
-                }, 600);
-            
-            }
-            else if (action === 'k-startup') {
-                // ★ [새로 추가된 부분] 기조연설자 정보 답변
-                setTimeout(() => {
-                    addBotMessage(`성과 요약 🚀
-- 한국, CES 혁신상 성과 대폭 호조: 3년 연속 CES 최다 수상국 기록 지속.
-- 최고 혁신상(Top Innovation) 30개 중 한국 기업이 15개(절반) 수상.
-- 혁신상 수상 기업의 80% 이상이 중소·중견기업 및 스타트업 — 스타트업 약진이 두드러짐.
-- 특히 AI 분야 최고 혁신상 3개를 한국 기업들이 모두 수상(스타트업 포함).
-
-주요 스타트업 수상작 / 주목작품 예시 ⭐
-- 뉴로핏(Neurofit) — AI 기반 치매 조기 진단 솔루션(디지털 헬스 분야) — 대표적 딥테크 스타트업 수상작으로 주목.
-
-배경 및 이유 🔍
-- 딥테크·AI 역량 강화, 정부·지자체·대기업의 전주기 창업 지원(삼성 C랩, 서울시 캠퍼스타운, 코트라 등)이 성과로 연결됨.
-- 피지컬 AI·로보틱스·디지털 헬스 등 CES 핵심 테마와의 높은 적합성으로 스타트업 경쟁력 발휘.`);
-                }, 600);
-            
-            }
-            else {
-                // 나머지 버튼들은 기존처럼 API 호출
+            } else {
+                // 그 외 버튼이나 입력창 질문은 API 호출 (AI 답변)
                 callApiAndGetResponse(text);
             }
         });
@@ -324,14 +214,14 @@ LG전자 📍
     function handleSendMessage() {
         const text = messageInput.value.trim();
         if (!text) return;
-        
+
         messageInput.value = '';
         addUserMessage(text);
         callApiAndGetResponse(text);
     }
 
     sendButton.addEventListener('click', handleSendMessage);
-    
+
     messageInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleSendMessage();
     });

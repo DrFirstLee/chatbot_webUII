@@ -1,371 +1,373 @@
-/* 기본 초기화 */
+/* ------------------------------------------------ */
+/* 1. 폰트 파일 등록 */
+/* ------------------------------------------------ */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('fonts/Pretendard-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('fonts/Pretendard-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* ------------------------------------------------ */
+/* 2. 기본 리셋 및 레이아웃 */
+/* ------------------------------------------------ */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* 1. html, body 스타일 수정 (가장 중요) */
-html, body {
+html,
+body {
     width: 100%;
-    height: 100%; /* 100vh 대신 100% 권장 (모바일 주소창 이슈 방지) */
+    height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* 전체 페이지 스크롤 방지 */
+    overflow: hidden;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    /* 배경 설정 유지 */
-    background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
-    
-    /* 화면 중앙 정렬을 위한 Flex 설정 */
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    background-color: #f5f5f5;
     display: flex;
     justify-content: center;
-    align-items: center; /* 수직 중앙 정렬 */
+    align-items: center;
 }
 
-
-/* 2. chatbot-container 높이 수정 */
 .chatbot-container {
     width: 100%;
-    max-width: 420px;
-    
-    /* 높이를 100%로 설정하여 부모(body) 높이를 꽉 채움 */
-    height: 100%; 
-    
-    background: rgba(255, 255, 255, 0.4); 
-    backdrop-filter: blur(10px);
+    max-width: 400px;
+    height: 100%;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-/* 헤더 */
-.chat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: transparent; /* 헤더 배경 투명 */
-}
-
-.back-arrow, .more-options {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #333;
-    cursor: pointer;
-}
-
-/* 채팅 본문 */
+/* ------------------------------------------------ */
+/* 3. 채팅 본문 영역 */
+/* ------------------------------------------------ */
 .chat-body {
     flex-grow: 1;
     overflow-y: auto;
     padding: 20px;
+    /* 배경 그라데이션 + 이미지 */
+    background-image:
+        linear-gradient(180deg, rgba(240, 248, 255, 0.9) 0%, rgba(180, 210, 255, 0.95) 100%),
+        url('back_img.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
-    /* 스크롤바 숨기기 (선택사항) */
-    scrollbar-width: none; 
 }
+
 .chat-body::-webkit-scrollbar {
     display: none;
 }
 
 /* ------------------------------------------------ */
-/* 1. 랜딩 페이지 디자인 (중앙 정렬 레이아웃) */
+/* 4. 상단 웰컴 버블 (전시장 찾기...) */
 /* ------------------------------------------------ */
-.landing-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.welcome-bubble {
     width: 100%;
-    padding-bottom: 20px;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.landing-header {
-    text-align: center;
+    background-color: #f7f8fa;
+    /* 아주 연한 회색 */
+    border-radius: 20px;
+    /* 더 둥글게 */
+    padding: 25px 20px;
     margin-bottom: 30px;
-    margin-top: 20px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.landing-header h1 {
-    font-size: 28px;
-    font-weight: 800;
-    color: #1a1a1a;
-    line-height: 1.3;
+.welcome-text-content {
+    position: relative;
+    z-index: 2;
+    padding-right: 80px;
+    /* 텍스트가 이미지와 겹치지 않게 여백 확보 */
+}
+
+.welcome-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1B285B;
+    /* 🌟 요청하신 헤드 텍스트 컬러 */
     margin-bottom: 8px;
+    line-height: 1.4;
+    word-break: keep-all;
 }
 
-.last-update {
+.welcome-text {
     font-size: 13px;
     color: #666;
     font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 0;
 }
 
-/* 카테고리 그룹 */
-.suggestion-group {
+.welcome-image-content {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    /* 로고 크기 고정 */
+    z-index: 1;
+}
+
+.welcome-logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ------------------------------------------------ */
+/* 5. 초기 인사말 (반가워요 매비예요!) - 카카오톡 프로필 스타일 */
+/* ------------------------------------------------ */
+.initial-greeting-container {
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+    /* 🌟 세로 정렬 (이미지 위, 텍스트 아래) */
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-bottom: 25px;
+    gap: 15px;
 }
 
-/* 원형 아이콘 */
-.group-icon-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+/* 프로필 이미지 (크게) */
+.greeting-avatar {
+    width: 90px;
+    /* 🌟 카카오톡 프로필처럼 크게 */
+    height: 90px;
+    border-radius: 40%;
+    /* 둥근 사각형 느낌 */
+    overflow: hidden;
+    background-color: transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* 그림자 효과 */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px;
-    font-size: 24px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.purple { background-color: #d8b4fe; color: #fff; }
-.teal { background-color: #5eead4; color: #fff; }
-.yellow { background-color: #fcd34d; color: #fff; }
-
-/* 알약 버튼 스타일 */
-.pill-btn {
+.greeting-avatar img {
     width: 100%;
-    background-color: #fff;
-    border: none;
-    padding: 14px 20px;
-    margin-bottom: 10px;
-    border-radius: 30px; /* 알약 모양 */
-    font-size: 14px;
-    color: #333;
-    text-align: left;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
+    height: 100%;
+    object-fit: cover;
 }
 
-.pill-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* 인사말 텍스트 (말풍선 느낌 제거하고 깔끔하게 텍스트만 배치하거나 투명 배경) */
+.greeting-message-bubble {
+    background-color: transparent;
+    /* 배경 투명하게 (깔끔함) */
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1.4;
+    padding: 0;
+    box-shadow: none;
+    word-break: keep-all;
 }
-
-/* 버튼 앞의 컬러 점 (Dot) */
-.pill-btn::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-.purple-dot::before { background-color: #a855f7; }
-.teal-dot::before { background-color: #14b8a6; }
-.yellow-dot::before { background-color: #f59e0b; }
 
 /* ------------------------------------------------ */
-/* 2. 대화 화면 (Chat Interface) */
+/* 6. 퀵 액션 버튼 (텍스트 길이에 맞춤) */
 /* ------------------------------------------------ */
-.response-container {
+.quick-actions-container {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     width: 100%;
+    margin-bottom: 20px;
+    align-items: flex-start;
+    /* 왼쪽 정렬 */
 }
 
+/* ------------------------------------------------ */
+/* 6. 퀵 액션 버튼 (수정됨) */
+/* ------------------------------------------------ */
+
+.pill-button {
+    width: fit-content;
+    max-width: 100%;
+
+    padding: 12px 20px;
+    background-color: #ffffff;
+    border: none;
+
+    /* 말풍선 모양 */
+    border-radius: 25px 25px 25px 5px;
+
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.4;
+
+    /* 🌟 핵심 수정: 줄바꿈 방지 */
+    white-space: nowrap;
+
+    /* 만약 텍스트가 너무 길어서 화면을 넘어가면 말줄임표(...) 처리하려면 아래 주석 해제 */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+}
+
+.pill-button .btn-icon {
+    margin-right: 8px;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.pill-button:active {
+    background-color: #00c6ba;
+    /* 클릭 시 테마 색상 */
+    color: white;
+    transform: scale(0.98);
+}
+
+/* ------------------------------------------------ */
+/* 7. 일반 채팅 메시지 (정렬 수정) */
+/* ------------------------------------------------ */
 .message {
     display: flex;
     margin-bottom: 15px;
-    max-width: 100%;
-    animation: slideUp 0.3s ease-out;
+    width: 100%;
+    /* 🌟 상단 라인 맞춤 (아바타가 위로 붕 뜨지 않게) */
+    align-items: flex-start;
 }
 
-.bot-message { align-self: flex-start; }
-.user-message { 
-    align-self: flex-end; 
-    justify-content: flex-end;
+/* 🤖 봇 메시지 */
+.bot-message {
+    justify-content: flex-start;
 }
 
-/* 챗봇 아바타 (메시지 옆 아이콘) 수정 */
 .bot-avatar {
     width: 36px;
     height: 36px;
     margin-right: 10px;
     flex-shrink: 0;
-    
-    /* 기존의 원형 배경, 그림자, 패딩 제거 */
-    background-color: transparent; /* 배경 투명하게 */
-    border-radius: 0;              /* 둥근 모서리 제거 */
-    padding: 0;                    /* 여백 제거 */
-    box-shadow: none;              /* 그림자 제거 */
-    border: none;                  /* 테두리 제거 */
-
-    /* 이미지를 중앙 정렬 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* border-radius: 50%; */
+    /* 봇 아이콘은 원형 */
+    overflow: hidden;
+    background-color: transparent;
+    /* margin-top: 0; 상단 정렬을 위해 마진 제거 */
 }
 
 .bot-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 비율 유지하며 꽉 채우기 */
-    border-radius: 0;    /* 이미지 자체의 둥근 모서리 제거 */
-    display: block;
-}
-
-.text-bubble {
-    padding: 12px 18px;
-    border-radius: 20px;
-    font-size: 15px;
-    line-height: 1.5;
-    max-width: 85%;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    object-fit: cover;
 }
 
 .bot-bubble {
-    background-color: #fff;
-    color: #333;
+    background-color: #ffffff;
+    padding: 12px 18px;
+
+    /* 🌟 말풍선 모서리 조금 더 둥글게 */
+    border-radius: 20px;
     border-top-left-radius: 4px;
+
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    max-width: 80%;
+    word-break: break-word;
+}
+
+/* 👤 사용자 메시지 */
+.user-message {
+    justify-content: flex-end;
 }
 
 .user-bubble {
-    background-color: #3b82f6; /* 파란색 계열 */
+    background-color: #00c6ba;
+    /* 🌟 요청하신 색상 */
     color: white;
+    padding: 12px 18px;
+
+    /* 🌟 말풍선 모서리 */
+    border-radius: 20px;
     border-top-right-radius: 4px;
+
+    font-size: 15px;
+    line-height: 1.5;
+    box-shadow: 0 2px 5px rgba(0, 198, 186, 0.2);
+    max-width: 80%;
+    word-break: break-word;
+    text-align: left;
 }
 
 /* ------------------------------------------------ */
-/* 하단 입력창 (Input Area) */
+/* 8. 하단 입력창 */
 /* ------------------------------------------------ */
 .chat-input-area {
-    padding: 10px 15px 20px; /* 하단 여백 추가 */
-    background: transparent;
     display: flex;
     align-items: center;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #f0f0f0;
     gap: 10px;
-}
-
-.tool-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    color: #555;
-    transition: transform 0.2s;
-}
-.tool-btn:hover { transform: scale(1.1); }
-
-.input-wrapper {
-    flex-grow: 1;
-    position: relative;
-    background-color: #fff;
-    border-radius: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    flex-shrink: 0;
 }
 
 #message-input {
-    width: 100%;
+    flex-grow: 1;
     padding: 12px 20px;
-    border: none;
-    background: transparent;
+    border: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    border-radius: 25px;
     font-size: 15px;
     outline: none;
-    border-radius: 25px;
+    transition: all 0.2s ease;
+}
+
+#message-input:focus {
+    background-color: #ffffff;
+    border-color: #00c6ba;
+    box-shadow: 0 0 0 3px rgba(0, 198, 186, 0.1);
 }
 
 #send-button {
-    width: 40px;
-    height: 40px;
-    background-color: #3b82f6;
+    width: 45px;
+    height: 45px;
+    background-color: #00c6ba;
+    /* 🌟 버튼 색상 변경 */
     color: white;
     border: none;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 3px 8px rgba(59, 130, 246, 0.3);
-    transition: background 0.2s;
-}
-#send-button:hover { background-color: #2563eb; }
-
-/* 애니메이션 */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    box-shadow: 0 3px 8px rgba(0, 198, 186, 0.3);
+    transition: all 0.2s;
 }
 
-/* 모달 스타일 (기존 유지) */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 9999;
-    justify-content: center; align-items: center;
-}
-.modal-overlay.active { display: flex; }
-.modal-content { background: #fff; padding: 20px; border-radius: 15px; width: 90%; max-width: 350px; }
-.modal-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-.close-button { background: none; border: none; font-size: 24px; cursor: pointer; }
-.option-button.primary { background: #3b82f6; color: white; padding: 10px; border:none; border-radius: 8px; cursor: pointer; }
-
-/* style.css 파일의 landing-header 관련 스타일 수정 */
-
-/* 기존 .landing-header 스타일 유지 */
-.landing-header {
-    text-align: center; /* last-update 중앙 정렬을 위해 유지 */
-    margin-bottom: 30px;
-    margin-top: 20px;
+#send-button:hover {
+    background-color: #00a89e;
+    transform: scale(1.05);
 }
 
-/* 🌟 새로운 스타일 추가: 텍스트와 이미지를 감싸는 컨테이너 */
-.header-title-container {
-    display: flex;        /* 이미지와 텍스트를 가로로 배치 */
-    align-items: center;  /* 수직 중앙 정렬 */
-    justify-content: center; /* 수평 중앙 정렬 (전체적으로 가운데 오도록) */
-    gap: 15px;            /* 이미지와 텍스트 사이 간격 */
-    margin-bottom: 8px;   /* last-update와의 간격 */
-}
-
-/* 🌟 헤더 로고 이미지 수정 */
-.header-logo {
-    width: 60px;            /* 로고가 너무 작아 보일 수 있어 약간 키웠습니다 (조절 가능) */
-    height: 60px;           /* 높이도 동일하게 설정 */
-    
-    /* border-radius: 50%;  <-- 이 줄을 삭제하거나 0으로 변경하여 원형 제거 */
-    border-radius: 0;       
-    
-    /* cover 대신 contain을 사용하여 이미지가 잘리지 않고 전체가 다 보이도록 설정 */
-    object-fit: contain;    
-    
-    /* 배경이 투명한 로고라면 그림자가 어색할 수 있어 주석 처리했습니다. 필요하면 주석 해제하세요. */
-    /* box-shadow: 0 4px 6px rgba(0,0,0,0.1); */
-}
-
-/* 기존 h1 스타일 수정 */
-.landing-header h1 {
-    font-size: 28px;
-    font-weight: 800;
-    color: #1a1a1a;
-    line-height: 1.3;
-    margin-bottom: 0; /* 컨테이너 margin으로 대체하므로 0으로 설정 */
-    text-align: left; /* 텍스트는 왼쪽 정렬 (이미지 옆에서 자연스럽게 보이도록) */
-}
-
-/* .last-update 스타일은 그대로 유지 */
-.last-update {
-    font-size: 13px;
-    color: #666;
-    font-weight: 500;
+#send-button:active {
+    transform: scale(0.95);
 }

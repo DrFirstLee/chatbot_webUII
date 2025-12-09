@@ -1,87 +1,76 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>CES 2026 AI 챗봇</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="chatbot-container">
-        <!-- <header class="chat-header">
-            <button class="back-arrow"><</button>
-            <div class="header-spacer"></div> <button class="more-options">...</button>
-        </header> -->
 
-        <div class="chat-body" id="chat-body">
-            <div id="landing-view" class="landing-view">
-                <div class="landing-header">
-                    <img src="chatbot_logo.jpg" alt="CES Chatbot Logo" class="header-logo">
-                    <h1>안녕하세요, CES 2026<br>무엇이든 물어보세요.</h1>
-                    <p class="last-update">매경미디어그룹</p>
+        <main class="chat-body" id="chat-body">
+
+            <div class="welcome-bubble">
+                <div class="welcome-text-content">
+                    <h3 class="welcome-title">
+                        전시장 찾기, 기술 정보, 부스 탐색까지!<br>
+                        매경 CES 내비게이션, 매비입니다💡
+                    </h3>
+                    <p class="welcome-text">
+                        궁금한 점을 메시지로 직접 입력하시거나,<br>
+                        아래 FAQ 메뉴를 선택해주세요.
+                    </p>
                 </div>
-
-                <div class="suggestion-group">
-                    <div class="group-icon-circle purple">
-                        <span>📅</span>
-                    </div>
-                    <button class="pill-btn purple-dot" data-action="ces-basic">
-                        CES 2026 일정과 4대 핵심 테마는?
-                    </button>
-                    
-                    <button class="pill-btn purple-dot" data-action="keynote-info">
-                        기조연설자와 주요 발표 내용은 누구인가요?
-                    </button>
-                </div>
-
-                <div class="suggestion-group">
-                    <div class="group-icon-circle teal">
-                        <span>🖥️</span>
-                    </div>
-                    <button class="pill-btn teal-dot" data-action="tech-trend">
-                        '피지컬 AI'와 휴머노이드 로봇 트렌드 설명해줘
-                    </button>
-                    <button class="pill-btn teal-dot" data-action="ces-foundry">
-                        'CES 파운드리'와 5대 산업 분야는 무엇인가요?
-                    </button>
-                </div>
-
-                <div class="suggestion-group">
-                    <div class="group-icon-circle yellow">
-                        <span>🧑‍💼</span>
-                    </div>
-                    <button class="pill-btn yellow-dot" data-action="k-company">
-                        삼성, LG, 현대차 등 한국 기업 전시 계획은?
-                    </button>
-                    <button class="pill-btn yellow-dot" data-action="k-startup">
-                        한국 스타트업 혁신상 수상 성과와 주요 수상작
-                    </button>
+                <div class="welcome-image-content">
+                    <img src="chatbot_logo.jpg" alt="매비 로고" class="welcome-logo">
                 </div>
             </div>
-            <div id="response-container" class="response-container" style="display: none;"></div>
-        </div>
-        
+
+            <div class="message bot-message initial-greeting-container">
+                <div class="message bot-message">
+                    <div class="bot-avatar">
+                        <img src="chatbot_logo.jpg" alt="AI">
+                    </div>
+                    <div class="text-bubble bot-bubble">
+                        반가워요, 매비예요!<br>
+                        무엇을 도와드릴까요?
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="quick-actions-container">
+                <button class="pill-button" data-action="ces-schedule">
+                    📅 CES 2026 전시장별 운영시간
+                </button>
+                <button class="pill-button" data-action="venue-info">
+                    📍 전시장 안내
+                </button>
+                <button class="pill-button" data-action="keynote-info">
+                    🔍 기조연설 정보
+                </button>
+                <button class="pill-button" data-action="floor-map">
+                    🔗 CES 2026 플로어맵 바로가기
+                </button>
+                <button class="pill-button" data-action="innovation-award">
+                    🏆 CES 2026 최고혁신상 수상작
+                </button>
+            </div>
+
+            <div id="response-container"></div>
+        </main>
+
         <div class="chat-input-area">
-            <div class="input-wrapper">
-                <input type="text" id="message-input" placeholder="질문 입력하기...">
-            </div>
+            <input type="text" id="message-input" placeholder="질문 또는 키워드를 입력하세요...">
             <button id="send-button">➤</button>
         </div>
-    </div>
 
-    <div id="contactModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>문의하기</h3>
-                <button class="close-button">&times;</button>
-            </div>
-            <div class="modal-body">
-                <textarea placeholder="문의 내용을 입력해주세요." rows="5" style="width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px; resize: none;"></textarea>
-                <button class="option-button primary" style="width: 100%; margin-top: 10px; justify-content: center;">전송하기</button>
-            </div>
-        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
