@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // API 엔드포인트
     // const API_ENDPOINT = '/api/chatbot_webUI';
-    const API_ENDPOINT = 'https://f77a22f3407a.ngrok-free.app/chatbot_webUI';
+    const API_ENDPOINT = 'https://f946b3e79c62.ngrok-free.app/chatbot_webUI';
 
     // ----------------------------------------------------------------
     // 2. 화면 전환 및 스크롤 함수
