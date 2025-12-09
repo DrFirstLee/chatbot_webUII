@@ -76,12 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.classList.add('message', 'bot-message');
 
         messageDiv.innerHTML = `
-            <div class="bot-avatar">
-                <img src="chatbot_logo.jpg" alt="AI">
+        <div class="initial-greeting-wrapper">
+            <div class="greeting-avatar">
+                <img src="logo_thumb.png" alt="매비 아바타">
             </div>
-            <div class="text-bubble bot-bubble">
+
+            <div class="greeting-message-bubble">
                 ${formatText(text)}
             </div>
+              </div>
         `;
         responseContainer.appendChild(messageDiv);
         scrollToBottom();

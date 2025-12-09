@@ -135,51 +135,77 @@ body {
 /* ------------------------------------------------ */
 /* 5. 초기 인사말 (반가워요 매비예요!) - 카카오톡 프로필 스타일 */
 /* ------------------------------------------------ */
-.initial-greeting-container {
-    margin-top: 10px;
-    margin-bottom: 30px;
+/* ------------------------------------------------ */
+/* 5. 초기 인사말 (반가워요 매비예요!) - 수직 정렬 수정 */
+/* ------------------------------------------------ */
 
-    /* 🌟 세로 정렬 (이미지 위, 텍스트 아래) */
+/* ------------------------------------------------ */
+/* 5. 초기 인사말 (완전 독립 스타일) */
+/* ------------------------------------------------ */
+
+/* ------------------------------------------------ */
+/* 5. 초기 인사말 (완전 독립 스타일) */
+/* ------------------------------------------------ */
+
+/* 1. 전체 컨테이너: 세로 정렬 & 중앙 정렬 */
+.initial-greeting-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* 위에서 아래로 배치 */
+    align-items: left;
+    /* 좌우 가운데 정렬 */
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 100%;
     gap: 15px;
+    /* 이미지와 텍스트 사이 간격 */
 }
 
-/* 프로필 이미지 (크게) */
+/* 2. 아바타 이미지: 원본 비율 그대로 크게 */
 .greeting-avatar {
-    width: 90px;
-    /* 🌟 카카오톡 프로필처럼 크게 */
-    height: 90px;
-    border-radius: 40%;
-    /* 둥근 사각형 느낌 */
-    overflow: hidden;
-    background-color: transparent;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    /* 그림자 효과 */
+    width: 60px;
+    /* 큼지막하게 */
+    height: 60px;
+
+    /* 배경/테두리/그림자/둥글기 모두 제거 (원본 이미지 강조) */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: left;
 }
 
 .greeting-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    /* 이미지 비율 유지 */
 }
 
-/* 인사말 텍스트 (말풍선 느낌 제거하고 깔끔하게 텍스트만 배치하거나 투명 배경) */
+/* 3. 텍스트 말풍선 */
 .greeting-message-bubble {
-    background-color: transparent;
-    /* 배경 투명하게 (깔끔함) */
-    font-size: 20px;
+    background-color: #ffffff;
+    font-size: 14px;
     font-weight: 700;
     color: #1a1a1a;
-    text-align: center;
     line-height: 1.4;
-    padding: 0;
-    box-shadow: none;
+    padding: 15px 25px;
+
+    border-radius: 25px;
+    /* 둥글게 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    /* 살짝 그림자 */
+
+    text-align: left;
     word-break: keep-all;
+    width: fit-content;
+    max-width: 100%;
 }
 
 /* ------------------------------------------------ */
@@ -255,20 +281,36 @@ body {
 }
 
 /* 🤖 봇 메시지 */
+/* ------------------------------------------------ */
+/* 7. 일반 채팅 메시지 (정렬 및 모양 수정) */
+/* ------------------------------------------------ */
+
+/* 🤖 봇 메시지 전체 컨테이너 */
 .bot-message {
+    display: flex;
+    align-items: flex-start;
+    /* 상단 정렬 (아바타와 말풍선 높이 맞춤) */
     justify-content: flex-start;
+    /* 🌟 왼쪽 정렬 */
+    width: 100%;
+    margin-bottom: 15px;
 }
 
+/* 봇 아바타 */
 .bot-avatar {
     width: 36px;
     height: 36px;
     margin-right: 10px;
+    /* 말풍선과의 간격 */
     flex-shrink: 0;
-    /* border-radius: 50%; */
-    /* 봇 아이콘은 원형 */
-    overflow: hidden;
+
+    /* 원형 아바타 스타일 유지 */
     background-color: transparent;
-    /* margin-top: 0; 상단 정렬을 위해 마진 제거 */
+    border-radius: 50%;
+    overflow: hidden;
+
+    /* 위치 미세 조정 (필요시) */
+    margin-top: 0;
 }
 
 .bot-avatar img {
@@ -277,19 +319,27 @@ body {
     object-fit: cover;
 }
 
+/* 💬 봇 말풍선 스타일 (왼쪽 위 뾰족하게) */
 .bot-bubble {
     background-color: #ffffff;
     padding: 12px 18px;
 
-    /* 🌟 말풍선 모서리 조금 더 둥글게 */
-    border-radius: 20px;
-    border-top-left-radius: 4px;
+    /* 🌟 핵심: 왼쪽 상단만 뾰족하게 (나머지는 둥글게) */
+    border-top-left-radius: 0;
+    /* 뾰족한 모서리 */
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 
     font-size: 15px;
     line-height: 1.5;
     color: #333;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    /* 그림자 효과 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
     max-width: 80%;
+    /* 너무 길어지지 않게 제한 */
     word-break: break-word;
 }
 
