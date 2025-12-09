@@ -1,223 +1,158 @@
-
-// script.js 파일 상단에 모달 관련 변수와 함수를 추가합니다.
-
-// 모달 요소 변수
-const modal = document.getElementById('contactModal');
-const moreOptionsButton = document.querySelector('.more-options');
-const closeButton = document.querySelector('.close-button');
-const sendInquiryButton = document.getElementById('sendInquiryButton');
-const contactForm = document.getElementById('contactForm');
-
-
-// 1. '...' 버튼 클릭 시 모달 열기
-moreOptionsButton.addEventListener('click', () => {
-    modal.style.display = 'flex'; // CSS에서 display: none; -> flex;로 변경하여 표시
-});
-
-// 2. 'X' 버튼 클릭 시 모달 닫기
-closeButton.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
-// 3. 모달 외부 클릭 시 모달 닫기
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
-
-// 4. 문의 전송 폼 제출 이벤트 처리
-contactForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // 기본 폼 제출 방지 (페이지 새로고침 방지)
-    
-    const email = document.getElementById('contactEmail').value;
-    const message = document.getElementById('contactMessage').value;
-    
-    // TODO: 이메일과 메시지를 Flask 서버의 다른 엔드포인트(예: /submit_contact)로 POST 요청 보내는 로직 구현
-    
-    // 현재는 임시 알림으로 대체
-    alert(`[문의 전송 완료]\n이메일: ${email}\n내용: ${message}\n\n서버로 전송하는 내용은 협의 후 추가 예정입니다.`);
-    
-    // 전송 후 모달 닫기 및 폼 초기화
-    modal.style.display = 'none';
-    contactForm.reset();
-});
-
-// (기존의 모든 챗봇 로직은 이 아래에 유지됩니다.)
-// ...
-
 document.addEventListener('DOMContentLoaded', () => {
-    const mainOptions = document.getElementById('main-options');
-    const responseContainer = document.getElementById('response-container');
+    // 1. DOM 요소 선택
     const chatBody = document.getElementById('chat-body');
-    const sendButton = document.getElementById('send-button');
+    const landingView = document.getElementById('landing-view'); // 초기 질문 버튼 화면
+    const responseContainer = document.getElementById('response-container'); // 대화가 쌓이는 곳
+    
     const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const pillButtons = document.querySelectorAll('.pill-btn'); // 질문 버튼들
+
+    // 모달 관련 요소
+    const moreOptionsBtn = document.querySelector('.more-options');
+    const modalOverlay = document.getElementById('contactModal');
+    const closeModalBtn = document.querySelector('.close-button');
+
+    // API 엔드포인트 (프록시 경로)
     const API_ENDPOINT = '/api/chatbot_webUI';
-    // const API_ENDPOINT = 'http://49.166.98.88:8801/chatbot_webUI';
-    // **새로운 함수: 마크다운 텍스트를 HTML로 변환 (굵은 글씨)**
-    const formatTextForDisplay = (text) => {
-        if (!text) return '';
-        // **...** 패턴을 <strong>...</strong> 태그로 변환
-        return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-    };
 
-    // 스크롤을 가장 아래로 이동하는 함수
-    const scrollToBottom = () => {
-        chatBody.scrollTop = chatBody.scrollHeight;
-    };
+    // ----------------------------------------------------------------
+    // 2. 화면 전환 및 스크롤 함수
+    // ----------------------------------------------------------------
 
-    /**
-     * 사용자 메시지를 화면에 추가하는 함수
-     * @param {string} message - 사용자 입력 메시지
-     */
-    const addUserMessageToScreen = (message) => {
-        // 메시지 추가 시 포맷팅 함수 적용
-        const formattedMessage = formatTextForDisplay(message);
-        const userMessageHtml = `
-            <div class="message user-message" style="margin-bottom: 10px;">
-                <div class="message-content text-bubble">
-                    ${formattedMessage}
-                </div>
-            </div>
-        `;
-        responseContainer.insertAdjacentHTML('beforeend', userMessageHtml);
-        scrollToBottom();
-    };
+    // 스크롤을 맨 아래로 이동
+    function scrollToBottom() {
+        chatBody.scrollTo({
+            top: chatBody.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
 
-    /**
-     * 챗봇 메시지를 화면에 추가하는 함수
-     * @param {string} message - 챗봇 응답 메시지 (API 응답)
-     */
-    const addBotMessageToScreen = (message) => {
-        // 메시지 추가 시 포맷팅 함수 적용
-        const formattedMessage = formatTextForDisplay(message);
-        const botMessageHtml = `
-            <div class="message bot-message" style="margin-bottom: 15px;">
-                <div class="bot-avatar ces-logo"><img src="chatbot_logo.jpg" alt="CES AI Logo"></div>
-                <div class="message-content text-bubble">
-                    ${formattedMessage}
-                </div>
-            </div>
-        `;
-        responseContainer.insertAdjacentHTML('beforeend', botMessageHtml);
-        scrollToBottom();
-    };
-
-    // 옵션 버튼 클릭 이벤트 핸들러
-    mainOptions.addEventListener('click', (event) => {
-        const button = event.target.closest('.option-button');
-        if (!button) return;
-
-        const action = button.dataset.action;
-        const buttonText = button.textContent.trim();
-        
-        // 1. 사용자 메시지 (클릭한 버튼) 추가
-        addUserMessageToScreen(buttonText);
-
-        // 2. 선택된 옵션에 따른 봇 응답 생성 (하드코딩된 정보 표시)
-        if (action === 'ces-schedule') {
-            
-            // **하드코딩된 응답 텍스트에 ** 굵은 글씨 적용**
-            const responseText = `
-                <div class="schedule-title">💻 CES 2026 일정</div>
-                <p><strong>[CES 2026 전시 일정]</strong></p>
-                <ul class="schedule-list">
-                    <li>1월 6일(화) 10AM-6PM</li>
-                    <li>1월 7일(수) 9AM-6PM</li>
-                    <li>1월 8일(목) 9AM-6PM</li>
-                    <li>1월 9일(금) 9AM-4PM</li>
-                </ul>
-            `;
-            
-            const botResponseHtml = `
-                <div class="message bot-message">
-                    <div class="bot-avatar ces-logo"><img src="chatbot_logo.jpg" alt="CES AI Logo"></div>
-                    <div class="message-content response-bubble">
-                        ${responseText}
-                    </div>
-                </div>
-            `;
-            responseContainer.insertAdjacentHTML('beforeend', botResponseHtml);
-            
-        } else {
-            // 다른 버튼 클릭 시 일반적인 텍스트 응답 추가 시에도 ** 포맷 적용
-            callApiAndGetResponse(buttonText);
+    // ★ 핵심: 초기 화면을 숨기고 채팅 화면을 보여주는 함수
+    function switchToChatView() {
+        if (landingView.style.display !== 'none') {
+            landingView.style.display = 'none'; // 초기 화면 숨김
+            responseContainer.style.display = 'flex'; // 대화창 보임
+            responseContainer.style.flexDirection = 'column'; // 세로 정렬 확실히 지정
         }
+    }
 
+    // 텍스트 포맷팅 (**굵게** -> <b>굵게</b>)
+    function formatText(text) {
+        if (!text) return "";
+        return text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+    }
+
+    // ----------------------------------------------------------------
+    // 3. 메시지 추가 함수 (사용자 / 봇)
+    // ----------------------------------------------------------------
+
+    // 사용자 메시지 추가
+    function addUserMessage(text) {
+        switchToChatView(); // 메시지 추가 시 강제로 채팅 화면으로 전환
+
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'user-message');
+        messageDiv.innerHTML = `
+            <div class="text-bubble user-bubble">
+                ${formatText(text)}
+            </div>
+        `;
+        responseContainer.appendChild(messageDiv);
         scrollToBottom();
-    });
+    }
 
-    /**
-     * API 호출을 처리하는 함수 (Flask 엔드포인트 연결)
-     * @param {string} message - 사용자 입력 메시지
-     */
-    const callApiAndGetResponse = async (message) => {
-        // 1. 로딩 메시지 표시
-        addBotMessageToScreen("...답변을 생성 중입니다...");
+    // 봇 메시지 추가
+    function addBotMessage(text) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'bot-message');
+        
+        // 챗봇 로고 이미지 (경로 확인 필요)
+        messageDiv.innerHTML = `
+            <div class="bot-avatar">
+                <img src="chatbot_logo.jpg" alt="AI">
+            </div>
+            <div class="text-bubble bot-bubble">
+                ${formatText(text)}
+            </div>
+        `;
+        responseContainer.appendChild(messageDiv);
+        scrollToBottom();
+    }
+
+    // ----------------------------------------------------------------
+    // 4. API 호출 로직
+    // ----------------------------------------------------------------
+    async function callApiAndGetResponse(userMessage) {
+        // '답변 생성 중' 로딩 메시지 표시
+        addBotMessage("...답변을 생성하고 있습니다...");
 
         try {
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // CORS 문제 발생 시 'Origin': window.location.origin 등을 추가해 볼 수 있습니다.
-                },
-                body: JSON.stringify({ query: message }) // 사용자 메시지를 'query' 키로 JSON 전송
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: userMessage })
             });
 
-            // HTTP 상태 코드가 200-299 사이가 아니면 에러 처리
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            
-            // 2. 기존 로딩 메시지 제거
-            const loadingMessage = responseContainer.querySelector('.message.bot-message:last-child');
-            if (loadingMessage && loadingMessage.textContent.includes('생성 중')) {
-                loadingMessage.remove(); 
-            }
-            
-            // 3. Flask에서 받은 'answer' 필드의 응답 메시지 추가
-            const botAnswer = data.answer || "죄송합니다. 서버에서 유효한 답변을 받지 못했습니다.";
-            addBotMessageToScreen(botAnswer);
+
+            // 로딩 메시지 삭제 (마지막 메시지 제거)
+            responseContainer.lastElementChild.remove();
+
+            // 실제 답변 표시
+            const botAnswer = data.answer || "죄송합니다. 답변을 가져올 수 없습니다.";
+            addBotMessage(botAnswer);
 
         } catch (error) {
-            console.error('API Error:', error);
-            
-            // 에러 발생 시 로딩 메시지 제거 후 오류 메시지 표시
-            const loadingMessage = responseContainer.querySelector('.message.bot-message:last-child');
-            if (loadingMessage) {
-                loadingMessage.remove();
+            console.error(error);
+            // 로딩 메시지 삭제
+            if (responseContainer.lastElementChild) {
+                responseContainer.lastElementChild.remove();
             }
-            addBotMessageToScreen("통신 오류가 발생했습니다. 서버 상태를 확인해주세요. (ERR: " + error.message + ")");
+            addBotMessage("서버와 통신 중 오류가 발생했습니다.");
         }
-    };
+    }
 
-    // 메시지 입력 후 전송 버튼 클릭 이벤트
-    sendButton.addEventListener('click', () => {
-        const message = messageInput.value.trim();
-        if (message) {
-            // 1. 사용자 메시지 UI에 추가
-            addUserMessageToScreen(message);
-                    
-            // 2. API 호출
-            callApiAndGetResponse(message);
+    // ----------------------------------------------------------------
+    // 5. 이벤트 리스너 (버튼 클릭, 입력 등)
+    // ----------------------------------------------------------------
 
-            // 3. 입력 창 비우기
-            messageInput.value = '';
-                    }
-                });
-                
-    // 엔터 키 입력 시 전송
-    messageInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); 
-            sendButton.click();
-        }
+    // ★ 질문 버튼(pill-btn) 클릭 시 이벤트 처리
+    pillButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const text = button.innerText.trim(); // 버튼에 적힌 텍스트 가져오기
+            
+            // 1. 사용자 말풍선 추가 (화면 전환 포함)
+            addUserMessage(text);
+            
+            // 2. API 호출하여 답변 받기
+            callApiAndGetResponse(text);
+        });
     });
 
-    // 초기 로드 시 스크롤 이동
-    scrollToBottom();
+    // 전송 버튼 클릭 및 엔터키 처리 함수
+    function handleSendMessage() {
+        const text = messageInput.value.trim();
+        if (!text) return;
+        
+        messageInput.value = ''; // 입력창 비우기
+        addUserMessage(text);    // 사용자 메시지 추가
+        callApiAndGetResponse(text); // API 호출
+    }
+
+    sendButton.addEventListener('click', handleSendMessage);
+    
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSendMessage();
+    });
+
+    // 모달 팝업 관련 (기존 유지)
+    if (moreOptionsBtn && modalOverlay) {
+        moreOptionsBtn.addEventListener('click', () => modalOverlay.style.display = 'flex');
+        closeModalBtn.addEventListener('click', () => modalOverlay.style.display = 'none');
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+        });
+    }
 });

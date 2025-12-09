@@ -3,94 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>CES 2026 참관단 AI 챗봇 서비스</title>
+    <title>CES 2026 AI 챗봇</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="chatbot-container">
         <header class="chat-header">
-            <!-- <span class="back-arrow">&lt;</span> -->
-            <span class="service-name-text">CES 2026 참관단 AI 챗봇 서비스</span> 
-            <span class="more-options">...</span>
+            <button class="back-arrow"><</button>
+            <div class="header-spacer"></div> <button class="more-options">...</button>
         </header>
 
         <div class="chat-body" id="chat-body">
+            <div id="landing-view" class="landing-view">
+                <div class="landing-header">
+                    <h1>안녕하세요, CES 2026<br>무엇이든 물어보세요.</h1>
+                    <p class="last-update">매경미디어그룹</p>
+                </div>
 
-                <img src="wide_logo.jpg" alt="CES 2026 Wide Banner" class="wide-banner-image">
+                <div class="suggestion-group">
+                    <div class="group-icon-circle purple">
+                        <span>☀️</span>
+                    </div>
+                    <button class="pill-btn purple-dot" data-action="ces-basic">
+                        CES 2026 일정과 4대 핵심 테마는?
+                    </button>
+                    <button class="pill-btn purple-dot" data-action="keynote-info">
+                        기조연설자와 주요 발표 내용은 누구인가요?
+                    </button>
+                </div>
 
-            <div class="message bot-message initial-greeting">
-                <div class="bot-avatar ces-logo"><img src="chatbot_logo.jpg" alt="CES AI Logo"></div>
-                <div class="message-content">
-                    <p class="company-name ces-title">CES</p>
-                    <p class="inquiry-prompt">AI 챗봇 서비스에 문의하기</p>
-                    <p class="time">오전 9:58</p>
+                <div class="suggestion-group">
+                    <div class="group-icon-circle teal">
+                        <span>☁️</span>
+                    </div>
+                    <button class="pill-btn teal-dot" data-action="tech-trend">
+                        '피지컬 AI'와 휴머노이드 로봇 트렌드 설명해줘
+                    </button>
+                    <button class="pill-btn teal-dot" data-action="ces-foundry">
+                        'CES 파운드리'와 5대 산업 분야는 무엇인가요?
+                    </button>
+                </div>
+
+                <div class="suggestion-group">
+                    <div class="group-icon-circle yellow">
+                        <span>⚡</span>
+                    </div>
+                    <button class="pill-btn yellow-dot" data-action="k-company">
+                        삼성, LG, 현대차 등 한국 기업 전시 계획은?
+                    </button>
+                    <button class="pill-btn yellow-dot" data-action="k-startup">
+                        한국 스타트업 혁신상 수상 성과와 주요 수상작
+                    </button>
                 </div>
             </div>
-
-            <div class="message bot-message">
-                <div class="bot-avatar ces-logo"><img src="chatbot_logo.jpg" alt="CES AI Logo"></div>
-                <div class="message-content text-bubble">
-                    안녕하세요, <strong>CES 2026 참관단 AI 챗봇</strong>입니다.<br>
-                    궁금한 점을 메시지로 직접 입력하시거나, 아래 메뉴를 선택해주세요.
-                </div>
-            </div>
-            
-            <div class="contact-info">
-                <p>
-                    <span class="icon">📞</span> 실시간 챗봇 상담 <strong>연중무휴 24시간</strong><br>
-                    <span class="icon">💻</span> 운영진 유선 문의 <strong>평일 09:00-18:00</strong>
-                </p>
-            </div>
-
-            <div class="main-options" id="main-options">
-                <button class="option-button primary" data-action="ces-schedule">
-                    <span class="icon">💻</span> CES 2026 일정
-                </button>
-                <button class="option-button secondary" data-action="venue-info">
-                    <span class="icon">📌</span> 전시장 안내
-                </button>
-                <!-- <button class="option-button secondary" data-action="tour-recommend">
-                    <span class="icon">🚶</span> 관람동선 추천
-                </button> -->
-                <button class="option-button secondary" data-action="keynote-info">
-                    <span class="icon">📝</span> 기조연설 정보
-                </button>
-                <button class="option-button secondary" data-action="lvcc-loop">
-                    <span class="icon">🚌</span> LVCC loop 탑승 위치
-                </button>
-            </div>
-            
-            <div id="response-container"></div>
-
+            <div id="response-container" class="response-container" style="display: none;"></div>
         </div>
         
         <div class="chat-input-area">
-            <input type="text" id="message-input" placeholder="메시지 또는 키워드를 입력하세요..." />
-            <button id="send-button">
-                <span class="send-icon">▲</span>
-            </button>
+            <div class="input-wrapper">
+                <input type="text" id="message-input" placeholder="질문 입력하기...">
+            </div>
+            <button id="send-button">➤</button>
         </div>
     </div>
+
     <div id="contactModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>챗봇 담당자에게 문의하기</h3>
-                <span class="close-button">&times;</span>
+                <h3>문의하기</h3>
+                <button class="close-button">&times;</button>
             </div>
             <div class="modal-body">
-                <p>챗봇 운영팀에 직접 문의하실 내용을 남겨주세요.</p>
-                <form id="contactForm">
-                    <label for="contactEmail">이메일 주소</label>
-                    <input type="email" id="contactEmail" placeholder="답변을 받을 이메일을 입력하세요" required>
-                    
-                    <label for="contactMessage">문의 내용</label>
-                    <textarea id="contactMessage" rows="5" placeholder="궁금한 내용을 구체적으로 작성해주세요." required></textarea>
-                    
-                    <button type="submit" id="sendInquiryButton">문의 전송</button>
-                </form>
+                <textarea placeholder="문의 내용을 입력해주세요." rows="5" style="width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px; resize: none;"></textarea>
+                <button class="option-button primary" style="width: 100%; margin-top: 10px; justify-content: center;">전송하기</button>
             </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
