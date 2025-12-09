@@ -94,50 +94,60 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. API 호출 로직
     // ----------------------------------------------------------------
     async function callApiAndGetResponse(userMessage) {
-        addBotMessage("...답변을 생성하고 있습니다...");
+        // 1. 처음에 "..." 또는 빈 말풍선을 먼저 만들고, 그 요소를 변수(currentBubble)에 저장합니다.
+        // addBotMessage 함수가 '생성된 DOM 요소(div)'를 return 하도록 되어 있다고 가정합니다.
+        // 만약 addBotMessage가 리턴을 안 한다면, 해당 함수를 조금 고쳐야 합니다.
+        const messageElement = addBotMessage("... 답변 생성 중 ...");
+
+        // 말풍선 텍스트가 들어가는 실제 위치를 찾습니다. 
+        // (구조가 <div class="message"><img logo><div class="text">내용</div></div> 라고 가정)
+        // 만약 addBotMessage가 텍스트 div 자체를 리턴하면 아래 줄은 필요 없습니다.
+        const bubbleText = messageElement.querySelector(".message-content") || messageElement;
 
         try {
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: userMessage })
+                body: JSON.stringify({ message: userMessage }) // Flask에서 받는 키값('message')과 일치시켜야 함
             });
 
-            // 1. 읽기 도구(Reader) 생성
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
-            let botAnswer = ""; // 답변을 누적할 변수
-            // 2. 채팅방에 빈 말풍선 먼저 추가 (여기에 글자를 채울 예정)
-            // addBotMessage 함수가 말풍선 요소를 리턴하도록 수정하거나, 
-            // 여기서 직접 DOM 요소를 만들어야 합니다. 예시:
-            const botBubble = document.createElement("div");
-            botBubble.className = "bot-message"; // 사용자님 CSS 클래스
-            chatContainer.appendChild(botBubble);
+            let botAnswer = "";
+            let isFirstChunk = true;
 
-
-            // 3. 스트림 읽기 시작 (무한 루프)
             while (true) {
                 const { done, value } = await reader.read();
-
-                if (done) break; // 스트림이 끝나면 루프 종료
+                if (done) break;
 
                 // 조각 데이터를 텍스트로 변환
                 const chunk = decoder.decode(value, { stream: true });
 
-                // 4. 화면에 실시간 업데이트 (타자기 효과)
-                botAnswer += chunk;
-                botBubble.innerText = botAnswer; // 말풍선 내용 갱신
+                // 첫 번째 데이터가 들어오면 "생성 중..." 텍스트를 지웁니다.
+                if (isFirstChunk) {
+                    bubbleText.innerText = "";
+                    isFirstChunk = false;
+                }
 
-                // 스크롤을 맨 아래로 내리기 (선택사항)
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                // 텍스트 누적
+                botAnswer += chunk;
+
+                // 화면 업데이트 (innerText는 줄바꿈(\n) 처리가 안 될 수 있으므로 필요시 innerHTML 사용)
+                // 간단한 줄바꿈 처리를 위해 정규식 사용 예시:
+                bubbleText.innerHTML = botAnswer.replace(/\n/g, "<br>");
+
+                // 스크롤 내리기 (chatContainer로 통일)
+                const chatContainer = document.getElementById("chat-container"); // ID 확인 필요
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
             }
 
         } catch (error) {
-            console.error(error);
-            if (responseContainer.lastElementChild) {
-                responseContainer.lastElementChild.remove();
-            }
-            addBotMessage("서버와 통신 중 오류가 발생했습니다.");
+            console.error("Stream Error:", error);
+            // 에러 발생 시 현재 말풍선에 에러 메시지 표시
+            bubbleText.innerText = "죄송합니다. 서버 연결 중 오류가 발생했습니다.";
+            bubbleText.style.color = "red";
         }
     }
 
