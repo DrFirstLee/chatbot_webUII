@@ -103,17 +103,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ query: userMessage })
             });
 
-            if (!response.ok) throw new Error('Network response was not ok');
-            const data = await response.json();
+            // 1. 읽기 도구(Reader) 생성
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let botAnswer = ""; // 답변을 누적할 변수
+            // 2. 채팅방에 빈 말풍선 먼저 추가 (여기에 글자를 채울 예정)
+            // addBotMessage 함수가 말풍선 요소를 리턴하도록 수정하거나, 
+            // 여기서 직접 DOM 요소를 만들어야 합니다. 예시:
+            const botBubble = document.createElement("div");
+            botBubble.className = "bot-message"; // 사용자님 CSS 클래스
+            chatContainer.appendChild(botBubble);
 
-            // 로딩 메시지 제거
-            if (responseContainer.lastElementChild) {
-                responseContainer.lastElementChild.remove();
+
+            // 3. 스트림 읽기 시작 (무한 루프)
+            while (true) {
+                const { done, value } = await reader.read();
+
+                if (done) break; // 스트림이 끝나면 루프 종료
+
+                // 조각 데이터를 텍스트로 변환
+                const chunk = decoder.decode(value, { stream: true });
+
+                // 4. 화면에 실시간 업데이트 (타자기 효과)
+                botAnswer += chunk;
+                botBubble.innerText = botAnswer; // 말풍선 내용 갱신
+
+                // 스크롤을 맨 아래로 내리기 (선택사항)
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
-
-            // 실제 답변 표시
-            const botAnswer = data.answer || "죄송합니다. 답변을 가져올 수 없습니다.";
-            addBotMessage(botAnswer);
 
         } catch (error) {
             console.error(error);
