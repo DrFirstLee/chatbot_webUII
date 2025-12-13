@@ -1,9 +1,10 @@
-[[redirects]]
-  # 사용자가 Netlify URL에서 /api/chatbot_webUI 경로로 요청하면
-  from = "/api/chatbot_webUI"
-  
-  # Netlify 서버가 내부적으로 이 HTTP 주소로 요청을 전달합니다.
-  # 브라우저는 여전히 HTTPS 요청을 보낸 것으로 인식합니다.
-  to = "http://49.166.98.88:8801/chatbot_webUI"
-  status = 200
-  force = true # 강제로 프록시를 사용하도록 설정
+# grok 으로사용하기에 모두 주석처리함
+#[[redirects]]
+#  # 사용자가 Netlify URL에서 /api/chatbot_webUI 경로로 요청하면
+#  from = "/api/chatbot_webUI"
+#  
+#  # Netlify 서버가 내부적으로 이 HTTP 주소로 요청을 전달합니다.
+#  # 브라우저는 여전히 HTTPS 요청을 보낸 것으로 인식합니다.
+#  to = "http://49.166.98.88:8801/chatbot_webUI"
+#  status = 200
+#  force = true # 강제로 프록시를 사용하도록 설정
