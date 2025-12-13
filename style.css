@@ -54,6 +54,53 @@ body {
 }
 
 /* ------------------------------------------------ */
+/* [추가] 상단 헤더 스타일 */
+/* ------------------------------------------------ */
+.chat-header {
+    width: 100%;
+    height: 60px;
+    /* 헤더 높이 고정 */
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+    /* 하단 구분선 */
+    flex-shrink: 0;
+    /* 화면이 작아져도 헤더 크기는 줄어들지 않음 */
+    z-index: 10;
+}
+
+.header-back-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    /* SemiBold */
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
+    /* 폰트 통일 */
+}
+
+.header-back-btn .back-icon {
+    margin-right: 8px;
+    /* 화살표와 텍스트 사이 간격 */
+    font-size: 14px;
+    color: #1B285B;
+    /* 웰컴 타이틀과 같은 남색 계열로 포인트 */
+    font-weight: bold;
+}
+
+.header-back-btn:hover {
+    opacity: 0.7;
+    /* 마우스 올렸을 때 살짝 흐려짐 */
+}
+
+/* ------------------------------------------------ */
 /* 3. 채팅 본문 영역 */
 /* ------------------------------------------------ */
 .chat-body {
@@ -78,9 +125,30 @@ body {
 /* ------------------------------------------------ */
 /* 4. 상단 웰컴 버블 (전시장 찾기...) */
 /* ------------------------------------------------ */
+/* 🌟 1. 추가: 'CES' 이미지 스타일 */
+.ces-logo-text {
+    height: 13px;
+    /* 텍스트 높이와 비슷하게 맞춤 (필요시 조절) */
+    width: auto;
+    vertical-align: middle;
+    /* 텍스트 중간에 오도록 정렬 */
+    margin: 0 0px;
+    /* 양옆 간격 미세 조정 */
+    /* 이미지 자체의 여백이 있다면 제거 */
+    display: inline-block;
+}
+
+
+.text-mint {
+    color: #00c6ba;
+    /* 요청하신 민트색 */
+    font-weight: 700;
+    /* 조금 더 강조 (선택사항) */
+}
+
 .welcome-bubble {
     width: 100%;
-    background-color: #f7f8fa;
+    background-color: rgba(255, 255, 255, 0.4);
     /* 아주 연한 회색 */
     border-radius: 20px;
     /* 더 둥글게 */
@@ -89,14 +157,19 @@ body {
     text-align: left;
     position: relative;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    /* 🌟 배경이 투명해졌으므로 내용물이 잘 보이게 보정 (선택사항) */
+    backdrop-filter: blur(5px);
+    /* 배경 흐림 효과 */
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .welcome-text-content {
     position: relative;
     z-index: 2;
-    padding-right: 80px;
+    padding-right: 70px;
     /* 텍스트가 이미지와 겹치지 않게 여백 확보 */
 }
+
 
 .welcome-title {
     font-size: 15px;
@@ -238,7 +311,7 @@ body {
     border-radius: 25px 25px 25px 5px;
 
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 700;
     color: #333;
     text-align: left;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);

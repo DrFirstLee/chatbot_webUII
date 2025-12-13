@@ -10,14 +10,21 @@
 
 <body>
     <div class="chatbot-container">
-
+        <header class="chat-header">
+            <button id="back-btn" class="header-back-btn">
+                <span class="back-icon">❮</span> FAQ 돌아가기
+            </button>
+        </header>
         <main class="chat-body" id="chat-body">
 
             <div class="welcome-bubble">
                 <div class="welcome-text-content">
                     <h3 class="welcome-title">
                         전시장 찾기, 기술 정보, 부스 탐색까지!<br>
-                        매경 CES 내비게이션, 매비입니다💡
+                        매경
+                        <img src="ces_official.png" alt="CES 로고" class="ces-logo-text">
+                        내비게이션,
+                        <span class="text-mint">매비</span>입니다💡
                     </h3>
                     <p class="welcome-text">
                         궁금한 점을 메시지로 직접 입력하시거나,<br>
@@ -60,7 +67,7 @@
         </main>
 
         <div class="chat-input-area">
-            <input type="text" id="message-input" placeholder="질문 또는 키워드를 입력하세요...">
+            <input type="text" id="message-input" placeholder="질문 또는 키워드를 입력하세요.">
             <button id="send-button">➤</button>
         </div>
 

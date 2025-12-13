@@ -12,9 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlay = document.getElementById('contactModal');
     const closeModalBtn = document.querySelector('.close-button');
 
-    // API 엔드포인트
+    // API 엔드포인트    //챗봇홈가기
+    const backBtn = document.getElementById('back-btn');
     // const API_ENDPOINT = '/api/chatbot_webUI';
     const API_ENDPOINT = 'https://f946b3e79c62.ngrok-free.app/chatbot_webUI';
+
 
     // ----------------------------------------------------------------
     // 2. 화면 전환 및 스크롤 함수
@@ -30,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.location.reload();
+        });
+    }
     // 랜딩 페이지 숨기지 않고 대화창 활성화
     function activateChatContainer() {
         if (responseContainer.style.display === 'none' || responseContainer.style.display === '') {
