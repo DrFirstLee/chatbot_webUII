@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>상세 답변 - CES 2026</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="chatbot-container">
+
+        <header class="chat-header">
+            <button id="back-btn" class="header-back-btn" onclick="location.href='index.html'">
+                <span class="back-icon">❮</span> FAQ 돌아가기
+            </button>
+        </header>
+
+        <main class="chat-body" id="chat-body">
+
+            <div class="message user-message">
+                <div class="text-bubble user-bubble" id="user-question-text">
+                    질문 내용을 불러오는 중...
+                </div>
+            </div>
+
+            <div class="initial-greeting-wrapper">
+                <div class="greeting-avatar">
+                    <img src="logo_thumb.png" alt="매비 아바타">
+                </div>
+                <div class="greeting-message-bubble" id="bot-answer-text">
+                    답변을 불러오고 있습니다...
+                </div>
+            </div>
+            <div id="response-container"></div>
+        </main>
+
+        <div class="chat-input-area">
+            <input type="text" id="message-input" placeholder="질문 또는 키워드를 입력하세요.">
+            <button id="send-button">➤</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

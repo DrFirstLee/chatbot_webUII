@@ -34,7 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (backBtn) {
         backBtn.addEventListener('click', () => {
-            window.location.reload();
+            // index.html로 이동 (같은 경로/루트에 있을 경우)
+            window.location.href = 'index.html';
+
+            // 또는
+            // window.location.assign('index.html');
         });
     }
     // 랜딩 페이지 숨기지 않고 대화창 활성화
@@ -166,41 +170,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. 이벤트 리스너
     // ----------------------------------------------------------------
 
+    // ----------------------------------------------------------------
+    // 5. 이벤트 리스너 (수정됨: FAQ 페이지 이동)
+    // ----------------------------------------------------------------
+
     pillButtons.forEach(button => {
         button.addEventListener('click', () => {
             const action = button.dataset.action;
             const text = button.innerText.trim();
 
-            addUserMessage(text); // 사용자 말풍선 추가
+            // 하드코딩된 주제들은 faq.html로 이동
+            const faqTopics = ['ces-schedule', 'venue-info', 'keynote-info', 'floor-map', 'innovation-award'];
 
-            // 하드코딩된 답변 처리
-            if (action === 'ces-schedule') {
-                setTimeout(() => {
-                    addBotMessage(`**📅 CES 2026 운영 시간**\n\n- **1월 6일(화):** 10 AM - 6 PM\n- **1월 7일(수):** 9 AM - 6 PM\n- **1월 8일(목):** 9 AM - 6 PM\n- **1월 9일(금):** 9 AM - 4 PM\n\n<span style="font-size: 13px; color: #666;">※ 현지 시간 기준이며, 상황에 따라 변동될 수 있습니다.</span>`);
-                }, 600);
-
-            } else if (action === 'venue-info') {
-                setTimeout(() => {
-                    addBotMessage(`**📍 주요 전시장 안내**\n\n**1. LVCC (라스베이거스 컨벤션 센터)**\n- 메인 전시, 모빌리티(West), 로보틱스(North), 가전(Central)\n\n**2. Venetian Expo (베네시안 엑스포)**\n- 유레카 파크(스타트업), 글로벌 파빌리온, 라이프스타일\n\n**3. ARIA / C Space**\n- 미디어, 광고, 엔터테인먼트 기술\n\n**4. Wynn / Encore**\n- 삼성전자 단독 전시관 및 비공개 미팅룸`);
-                }, 600);
-
-            } else if (action === 'keynote-info') {
-                setTimeout(() => {
-                    addBotMessage(`**🎤 주요 기조연설 (Keynote)**\n\n**1. 리사 수 (AMD CEO)**\n- 1/5, Venetian Palazzo Ballroom\n- 고성능 AI 컴퓨팅 및 미래 전략 발표\n\n**2. 양위안칭 (Lenovo CEO)**\n- Sphere(스피어) 무대\n- "Smarter AI for All" (하이브리드 AI 비전)\n\n**3. 게리 샤피로 (CTA 회장)**\n- CES 파운드리(AI·블록체인·양자) 신설 소개`);
-                }, 600);
-
-            } else if (action === 'floor-map') {
-                setTimeout(() => {
-                    addBotMessage(`**🔗 CES 2026 플로어맵**\n\n공식 웹사이트 또는 모바일 앱에서 실시간 지도를 확인하실 수 있습니다.\n원하시는 전시관(예: 삼성, LVCC West)을 말씀해주시면 위치를 안내해 드릴게요! 😉`);
-                }, 600);
-
-            } else if (action === 'innovation-award') {
-                setTimeout(() => {
-                    addBotMessage(`**🏆 CES 2026 최고혁신상 하이라이트**\n\n올해 최고혁신상 30개 중 **절반(15개)**을 한국 기업이 수상했습니다! 🎉\n\n**✨ 주요 수상작:**\n- **두산로보틱스:** AI 자율 로봇 '스캔앤고'\n- **딥퓨전에이아이:** 4D 레이더 'RAPA'\n- **삼성전자:** 양자내성암호 기술\n- **LG전자, 네이션에이, 둠둠 등** 다수 수상`);
-                }, 600);
-
+            if (faqTopics.includes(action)) {
+                // 🌟 핵심: faq.html로 이동하면서 topic 파라미터 전달
+                window.location.href = `faq.html?topic=${action}`;
             } else {
-                // 그 외 버튼은 AI 호출
+                // 그 외 버튼이나 기능은 기존처럼 채팅방에 표시
+                addUserMessage(text);
                 callApiAndGetResponse(text);
             }
         });
@@ -234,4 +221,98 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === modalOverlay) modalOverlay.style.display = 'none';
         });
     }
+});
+
+
+
+// faq 
+const faqData = {
+    'ces-schedule': {
+        question: '📅 CES 2026 전시장별 운영시간',
+        answer: `
+                    <strong>CES 2026 공식 운영 시간입니다.</strong><br><br>
+                    <ul>
+                        <li><strong>1월 6일(화):</strong> 10 AM - 6 PM</li>
+                        <li><strong>1월 7일(수):</strong> 9 AM - 6 PM</li>
+                        <li><strong>1월 8일(목):</strong> 9 AM - 6 PM</li>
+                        <li><strong>1월 9일(금):</strong> 9 AM - 4 PM</li>
+                    </ul>
+                    <div class="highlight-box">
+                        ※ 현지 시간 기준이며, 상황에 따라 변동될 수 있습니다.
+                    </div>
+                `
+    },
+    'venue-info': {
+        question: '📍 전시장 안내',
+        answer: `
+                    <strong>라스베이거스 주요 전시장 특징입니다.</strong><br><br>
+                    <strong>1. LVCC (컨벤션 센터)</strong><br>
+                    메인 전시, 모빌리티(West), 로보틱스(North), 가전(Central)<br><br>
+                    
+                    <strong>2. Venetian Expo</strong><br>
+                    유레카 파크(스타트업), 글로벌 파빌리온<br><br>
+                    
+                    <strong>3. ARIA / C Space</strong><br>
+                    미디어, 광고, 엔터테인먼트 기술
+                `
+    },
+    'keynote-info': {
+        question: '🔍 기조연설 정보',
+        answer: `
+                    <strong>올해의 핵심 기조연설자(Keynote)입니다.</strong><br><br>
+                    🎤 <strong>리사 수 (AMD CEO)</strong><br>
+                    - 고성능 AI 컴퓨팅 전략 발표<br><br>
+
+                    🎤 <strong>양위안칭 (Lenovo CEO)</strong><br>
+                    - "Smarter AI for All" 비전 공유<br><br>
+
+                    🗣️ <strong>게리 샤피로 (CTA 회장)</strong><br>
+                    - CES 파운드리(AI·블록체인) 소개
+                `
+    },
+    'floor-map': {
+        question: '🔗 CES 2026 플로어맵 바로가기',
+        answer: `
+                    <strong>길을 찾고 계신가요?</strong><br><br>
+                    CES 공식 웹사이트 또는 모바일 앱에서 
+                    실시간 인터랙티브 지도를 확인하실 수 있습니다.<br><br>
+                    찾으시는 기업명(예: 삼성, LG)을 입력창에 검색하시면 위치를 글로 안내해 드릴게요! 😉
+                `
+    },
+    'innovation-award': {
+        question: '🏆 CES 2026 최고혁신상 수상작',
+        answer: `
+                    <strong>K-테크의 위상을 확인하세요!</strong><br><br>
+                    최고혁신상 30개 중 <strong>15개</strong>를 한국 기업이 수상했습니다. 🎉<br><br>
+                    ✨ <strong>주요 수상작:</strong><br>
+                    - 두산로보틱스 (로봇)<br>
+                    - 딥퓨전에이아이 (4D 레이더)<br>
+                    - 삼성전자 (양자내성암호)<br>
+                    - LG전자, 둠둠 등 다수
+                `
+    }
+};
+
+// ----------------------------------------------------
+// 2. 페이지 로드 시 내용 채우기
+// ----------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    // URL 파라미터 가져오기 (?topic=ces-schedule 등)
+    const urlParams = new URLSearchParams(window.location.search);
+    const topic = urlParams.get('topic');
+
+    // DOM 요소 선택
+    const userBubble = document.getElementById('user-question-text');
+    const botBubble = document.getElementById('bot-answer-text');
+
+    if (topic && faqData[topic]) {
+        // 데이터가 있으면 채워넣기
+        userBubble.innerText = faqData[topic].question; // 사용자 말풍선
+        botBubble.innerHTML = faqData[topic].answer;    // 봇 답변 (HTML 허용)
+    } else {
+        // 데이터가 없거나 잘못된 접근일 때
+        userBubble.innerText = "잘못된 접근입니다.";
+        botBubble.innerText = "해당 정보를 찾을 수 없습니다. 다시 시도해주세요.";
+    }
+
 });

@@ -132,7 +132,7 @@ body {
     width: auto;
     vertical-align: middle;
     /* 텍스트 중간에 오도록 정렬 */
-    margin: 0 0px;
+    margin: 0 0 2px 0px;
     /* 양옆 간격 미세 조정 */
     /* 이미지 자체의 여백이 있다면 제거 */
     display: inline-block;
@@ -187,6 +187,7 @@ body {
     font-weight: 500;
     line-height: 1.4;
     margin-bottom: 0;
+    padding: 10px 0px 5px 0;
 }
 
 .welcome-image-content {
