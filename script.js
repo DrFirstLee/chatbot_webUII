@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     // const API_ENDPOINT = '/api/chatbot_webUI';
     const API_ENDPOINT = 'https://f946b3e79c62.ngrok-free.app/chatbot_webUI';
-
+    let chatHistory = [];
 
     // ----------------------------------------------------------------
     // 2. 화면 전환 및 스크롤 함수
@@ -125,7 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: userMessage })
+                body: JSON.stringify({
+                    query: userMessage,
+                    // [수정됨] 대화 내역을 함께 전송
+                    history: chatHistory
+                })
             });
 
             if (!response.ok) {
@@ -159,7 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 스크롤 유지
                 scrollToBottom();
             }
+            chatHistory.push({ role: "user", content: userMessage });
+            chatHistory.push({ role: "assistant", content: botAnswer });
 
+            // 디버깅용: 콘솔에서 쌓이는 내역 확인 가능
+            console.log("Current History:", chatHistory);
         } catch (error) {
             console.error("Stream Error:", error);
             bubbleText.innerHTML = "<span style='color:red;'>죄송합니다. 서버 연결 중 오류가 발생했습니다.</span>";
