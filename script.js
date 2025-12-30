@@ -244,10 +244,7 @@ const faqData = {
                         <li><strong>1월 7일(수):</strong> 오전 9시~오후 6시</li>
                         <li><strong>1월 8일(목):</strong> 오전 9시~오후 6시</li>
                         <li><strong>1월 9일(금):</strong> 오전 9시~오후 4시</li>
-                    </ul><br>
-                    <div class="highlight-box">
-                        ※ 현지 시간 기준이며, 상황에 따라 변동될 수 있습니다.
-                    </div>
+                    </ul>
                 `
     },
     'venue-info': {
