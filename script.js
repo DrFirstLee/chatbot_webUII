@@ -250,7 +250,6 @@ const faqData = {
     'venue-info': {
         question: '📍 전시장 안내',
         answer: `
-                    <strong>라스베이거스 주요 전시장 입니다.</strong><br><br>
                     <strong>📍LVCC (컨벤션 센터)</strong>: 1/6~1/9, 4일 운영<br><br>
                     
                     <strong>📍Venetian Expo</strong>: 1/6~1/9, 4일 운영<br><br>
