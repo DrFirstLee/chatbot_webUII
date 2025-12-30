@@ -240,11 +240,11 @@ const faqData = {
         answer: `
                     <strong>CES 2026 공식 운영 시간입니다.</strong><br><br>
                     <ul>
-                        <li><strong>1월 6일(화):</strong> 10 AM - 6 PM</li>
-                        <li><strong>1월 7일(수):</strong> 9 AM - 6 PM</li>
-                        <li><strong>1월 8일(목):</strong> 9 AM - 6 PM</li>
-                        <li><strong>1월 9일(금):</strong> 9 AM - 4 PM</li>
-                    </ul>
+                        <li><strong>1월 6일(화):</strong> 오전 10시~오후 6시</li>
+                        <li><strong>1월 7일(수):</strong> 오전 9시~오후 6시</li>
+                        <li><strong>1월 8일(목):</strong> 오전 9시~오후 6시</li>
+                        <li><strong>1월 9일(금):</strong> 오전 9시~오후 4시</li>
+                    </ul><br>
                     <div class="highlight-box">
                         ※ 현지 시간 기준이며, 상황에 따라 변동될 수 있습니다.
                     </div>
@@ -253,50 +253,60 @@ const faqData = {
     'venue-info': {
         question: '📍 전시장 안내',
         answer: `
-                    <strong>라스베이거스 주요 전시장 특징입니다.</strong><br><br>
-                    <strong>1. LVCC (컨벤션 센터)</strong><br>
-                    메인 전시, 모빌리티(West), 로보틱스(North), 가전(Central)<br><br>
+                    <strong>라스베이거스 주요 전시장 입니다.</strong><br><br>
+                    <strong>📍LVCC (컨벤션 센터)</strong>: 1/6~1/9, 4일 운영<br><br>
                     
-                    <strong>2. Venetian Expo</strong><br>
-                    유레카 파크(스타트업), 글로벌 파빌리온<br><br>
+                    <strong>📍Venetian Expo</strong>: 1/6~1/9, 4일 운영<br><br>
                     
-                    <strong>3. ARIA / C Space</strong><br>
-                    미디어, 광고, 엔터테인먼트 기술
+                    <strong>📍C Space Campus</strong>: 1/6~1/8, 3일 운영<br><br>
+                    
+                    <strong>📍CES Foundry (Fontainebleau Hotel 4층)</strong>: &nbsp;&nbsp;&nbsp;&nbsp;1/7~1/8, 2일 운영  
+                    <br> 
                 `
     },
     'keynote-info': {
         question: '🔍 기조연설 정보',
         answer: `
-                    <strong>올해의 핵심 기조연설자(Keynote)입니다.</strong><br><br>
-                    🎤 <strong>리사 수 (AMD CEO)</strong><br>
-                    - 고성능 AI 컴퓨팅 전략 발표<br><br>
+<strong>CES 2026 기조연설(Keynote Speech) 진행 순서대로 안내드릴게요!</strong><br><br>
 
-                    🎤 <strong>양위안칭 (Lenovo CEO)</strong><br>
-                    - "Smarter AI for All" 비전 공유<br><br>
+🎤 <strong>리사 수 (AMD 회장 겸 CEO)</strong><br>
+- 일시: 1월 5일(월) 오후 6:30<br>
+- 장소: Venetian 5F, Palazzo Ballroom<br>
+- 내용: ‘AI 시대의 고성능 컴퓨팅 비전’ 및 미래형 AI 솔루션 제시<br><br>
 
-                    🗣️ <strong>게리 샤피로 (CTA 회장)</strong><br>
-                    - CES 파운드리(AI·블록체인) 소개
+🎤 <strong>롤랜드 부쉬 (지멘스AG 회장 겸 CEO)</strong><br>
+- 일시: 1월 6일(화) 오전 8:30<br>
+- 장소: Venetian 5F, Palazzo Ballroom<br>
+- 내용: 산업용 AI·디지털 트윈·자동화 기술 중심의 혁신 비전<br><br>
+
+🎤 <strong>야닉 볼로레 (하바스 CEO 겸 비벤디 의장)</strong><br>
+- 일시: 1월 6일(화) 오전 11:00<br>
+- 장소: ARIA 2F, Mariposa 5<br>
+- 내용: ‘Converged.AI’ 플랫폼 중심의 콘텐츠·데이터·광고 통합 시스템<br><br>
+
+🎤 <strong>양위안칭 (레노버 회장 겸 CEO)</strong><br>
+- 일시: 1월 6일(화) 오후 5:00<br>
+- 장소: 스피어(Sphere)<br>
+- 내용: ‘Smarter AI for All’을 주제로 한 미래 기술 비전<br><br>
+
+🎤 <strong>조 크리드 (캐터필러 CEO)</strong><br>
+- 일시: 1월 7일(수) 오전 9:00<br>
+- 장소: Venetian 5F, Palazzo Ballroom<br>
+- 내용: 산업 장비의 디지털 전환 및 AI·자율주행 적용 사례<br><br>
                 `
     },
     'floor-map': {
         question: '🔗 CES 2026 플로어맵 바로가기',
         answer: `
-                    <strong>길을 찾고 계신가요?</strong><br><br>
-                    CES 공식 웹사이트 또는 모바일 앱에서 
-                    실시간 인터랙티브 지도를 확인하실 수 있습니다.<br><br>
-                    찾으시는 기업명(예: 삼성, LG)을 입력창에 검색하시면 위치를 글로 안내해 드릴게요! 😉
+                    <strong>⬇️아래 링크를 클릭해주세요.⬇️</strong><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://myip.kr/kFAuZ" target="_blank">CES 2026 | Floor Plan</a>
                 `
     },
     'innovation-award': {
         question: '🏆 CES 2026 최고혁신상 수상작',
         answer: `
-                    <strong>K-테크의 위상을 확인하세요!</strong><br><br>
-                    최고혁신상 30개 중 <strong>15개</strong>를 한국 기업이 수상했습니다. 🎉<br><br>
-                    ✨ <strong>주요 수상작:</strong><br>
-                    - 두산로보틱스 (로봇)<br>
-                    - 딥퓨전에이아이 (4D 레이더)<br>
-                    - 삼성전자 (양자내성암호)<br>
-                    - LG전자, 둠둠 등 다수
+                    <strong>⬇️아래 링크를 클릭해주세요.⬇️</strong><br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.instagram.com/p/DQ5c3u6gbX-/?img_index=1" target="_blank">CES 2026 최고혁신상 수상작 리스트</a>
                 `
     }
 };
