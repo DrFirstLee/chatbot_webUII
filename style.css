@@ -152,8 +152,8 @@ body {
     /* 아주 연한 회색 */
     border-radius: 20px;
     /* 더 둥글게 */
-    padding: 25px 20px;
-    margin-bottom: 30px;
+    padding: 10px 20px;
+    margin-bottom: 0px;
     text-align: left;
     position: relative;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
