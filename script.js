@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // faq 
 const faqData = {
     'ces-schedule': {
-        question: '📅 CES 2026 전시장별 운영시간',
+        question: '📅 CES 2026 전시장 운영시간',
         answer: `
                     <strong>CES 2026 공식 운영 시간입니다.</strong><br><br>
                     <ul>
@@ -248,7 +248,7 @@ const faqData = {
                 `
     },
     'venue-info': {
-        question: '📍 전시장 안내',
+        question: '📍 주요 전시장 안내',
         answer: `
                     <strong>📍LVCC (컨벤션 센터)</strong>: 1/6~1/9, 4일 운영<br><br>
                     
