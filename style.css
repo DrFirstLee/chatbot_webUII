@@ -230,7 +230,7 @@ body {
     /* 좌우 가운데 정렬 */
     justify-content: center;
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     width: 100%;
     gap: 15px;
     /* 이미지와 텍스트 사이 간격 */
