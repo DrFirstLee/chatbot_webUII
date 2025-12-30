@@ -306,7 +306,7 @@ const faqData = {
         question: '🏆 CES 2026 최고혁신상 수상작',
         answer: `
                     <strong>⬇️아래 링크를 클릭해주세요.⬇️</strong><br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.instagram.com/p/DQ5c3u6gbX-/?img_index=1" target="_blank">CES 2026 최고혁신상 수상작 리스트</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.instagram.com/p/DQ5c3u6gbX-" target="_blank">CES 2026 최고혁신상 수상작 리스트</a>
                 `
     }
 };
