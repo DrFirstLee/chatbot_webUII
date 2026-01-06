@@ -124,7 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true'
+                },
                 body: JSON.stringify({
                     query: userMessage,
                     // [수정됨] 대화 내역을 함께 전송
@@ -170,7 +173,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Current History:", chatHistory);
         } catch (error) {
             console.error("Stream Error:", error);
-            bubbleText.innerHTML = "<span style='color:red;'>죄송합니다. 서버 연결 중 오류가 발생했습니다.</span>";
+            // bubbleText.innerHTML = "<span style='color:red;'>죄송합니다. 서버 연결 중 오류가 발생했습니다.</span>";
+            // 1. 에러의 구체적인 내용을 문자열로 추출
+            // error.message: "Failed to fetch" 또는 "서버 응답 오류: 403" 등이 들어있음
+            let errorMessage = error.message || "알 수 없는 오류";
+            let errorName = error.name || "Error";
+
+            // 2. 화면에 표시 (빨간색 안내 + 회색 박스에 상세 로그)
+            bubbleText.innerHTML = `
+                <span style='color:red; font-weight:bold;'>죄송합니다. 서버 연결 중 오류가 발생했습니다.</span>
+                <br><br>
+                <div style='background-color: #f1f1f1; padding: 10px; border-radius: 5px; font-size: 12px; color: #555; text-align: left; border: 1px solid #ddd;'>
+                    <strong>🚨 DEBUG LOG:</strong><br>
+                    [Type]: ${errorName}<br>
+                    [Msg]: ${errorMessage}
+                </div>
+            `;
         }
     }
 
